@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link, graphql, type PageProps, type HeadProps } from 'gatsby';
-import Seo from '..//components/Seo';
+import Seo from '../components/Seo';
 import type { MicroCMSBlogs } from '../../types';
 
 type BlogPostTemplateQueryData = {
@@ -23,7 +23,7 @@ function BlogsTemplate({ data }: PageProps<BlogPostTemplateQueryData, BlogPostTe
       <article>
         <h1>{title}</h1>
         <p>{publishedAt}</p>
-        <div dangerouslySetInnerHTML={{ __html: content }}></div>
+        <div dangerouslySetInnerHTML={{ __html: content }} />
       </article>
       <nav>
         <div>

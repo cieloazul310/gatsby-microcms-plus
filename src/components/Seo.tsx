@@ -6,18 +6,23 @@ type SeoProps = React.PropsWithChildren<{
   description?: string;
 }>;
 
-function Seo(props: SeoProps) {
+function Seo({ title, description, children }: SeoProps) {
   const siteMetadata = useSiteMetadata();
-  const title = props.title ? `${props.title} - ${siteMetadata.title}` : siteMetadata.title;
-  const description = props.description ?? siteMetadata.description;
+  const pageTitle = title ? `${title} - ${siteMetadata.title}` : siteMetadata.title;
+  const pageDescription = description ?? siteMetadata.description;
 
   return (
     <>
-      <title>{title}</title>
-      <meta name="description" content={description} />
-      {props.children}
+      <title>{pageTitle}</title>
+      <meta name="description" content={pageDescription} />
+      {children}
     </>
   );
 }
+
+Seo.defaultProps = {
+  title: undefined,
+  description: undefined,
+};
 
 export default Seo;
