@@ -9,7 +9,7 @@ const config: GatsbyConfig = {
     description: `Gatsby + microCMS`,
     author: `cieloazul310`,
   },
-  pathPrefix: '/gatsby-microcms',
+  pathPrefix: '/gatsby-microcms-plus',
   plugins: [
     {
       resolve: 'gatsby-source-microcms',
