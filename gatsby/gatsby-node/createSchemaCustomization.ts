@@ -1,4 +1,5 @@
 import type { CreateSchemaCustomizationArgs } from 'gatsby';
+// import parse from 'html-dom-parser';
 import type { MicroCMSBlogs } from '../../types';
 
 export default async function createSchemaCustomization({ actions, schema }: CreateSchemaCustomizationArgs) {
@@ -6,6 +7,7 @@ export default async function createSchemaCustomization({ actions, schema }: Cre
   createTypes(`
     type MicrocmsBlogs implements Node {
       slug: String!
+      excerpt: String!
     }
   `);
   createTypes(
@@ -20,6 +22,14 @@ export default async function createSchemaCustomization({ actions, schema }: Cre
             const month = date.getMonth() + 1;
             return `/${year}/${month.toString().padStart(2, '0')}/${blogsId}/`;
           },
+        },
+        excerpt: {
+          type: `String!`,
+          /*
+          resolve: ({ content }: Pick<MicroCMSBlogs, 'content'>) => {
+            const item = parse(content);
+          },
+          */
         },
       },
     })

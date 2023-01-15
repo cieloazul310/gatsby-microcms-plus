@@ -17,7 +17,7 @@ function Jumbotron({ title, description, children, height = 480 }: JumbotronProp
           <Heading as="h1" size="2xl" mb={2}>
             {title}
           </Heading>
-          <Heading as="p" size="md">
+          <Heading as="p" size="md" color="whiteAlpha.900">
             {description}
           </Heading>
         </>

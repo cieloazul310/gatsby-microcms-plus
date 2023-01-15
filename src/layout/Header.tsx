@@ -15,7 +15,7 @@ function Header() {
             as="h1"
             size="md"
             _hover={{
-              color: 'blue.600',
+              color: 'primary.100',
             }}
           >
             {title}

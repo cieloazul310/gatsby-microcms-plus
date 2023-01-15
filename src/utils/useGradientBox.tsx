@@ -2,7 +2,7 @@
 function useGradientBox() {
   return {
     color: 'white',
-    bgGradient: 'linear(to-r, primary.400, secondary.100)',
+    bgGradient: 'linear(to-r, primary.500, secondary.100)',
   };
 }
 
