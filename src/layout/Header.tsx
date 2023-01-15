@@ -1,22 +1,14 @@
 import * as React from 'react';
 import { Link as GatsbyLink } from 'gatsby';
 import { Flex, Box, Spacer, Heading, Link as ChakraLink, ButtonGroup, Button, Hide } from '@chakra-ui/react';
+import useGradientBox from '../utils/useGradientBox';
 import useSiteMetadata from '../utils/useSiteMetadata';
 
 function Header() {
   const { title } = useSiteMetadata();
+  const { color, bgGradient } = useGradientBox();
   return (
-    <Flex
-      as="header"
-      alignItems="center"
-      minWidth="max-content"
-      gap={2}
-      position="sticky"
-      top={0}
-      zIndex="sticky"
-      bgColor="whiteAlpha.700"
-      backdropFilter="blur(2px)"
-    >
+    <Flex as="header" alignItems="center" gap={2} position="sticky" top={0} zIndex="sticky" color={color} bgGradient={bgGradient}>
       <Box px={4} py={2}>
         <ChakraLink to="/" as={GatsbyLink}>
           <Heading
@@ -32,7 +24,7 @@ function Header() {
       </Box>
       <Spacer />
       <Hide below="sm">
-        <ButtonGroup gap="2" px={4} py={2} colorScheme="blue">
+        <ButtonGroup gap="2" px={4} py={2} colorScheme="primary">
           <Button>Sign Up</Button>
           <Button>Log in</Button>
         </ButtonGroup>

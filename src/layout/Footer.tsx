@@ -1,11 +1,14 @@
 import * as React from 'react';
-import { Flex, Text, Link as ChakraLink } from '@chakra-ui/react';
+import { Flex, Heading, Text, Link as ChakraLink } from '@chakra-ui/react';
 import useSiteMetadata from '../utils/useSiteMetadata';
 
 function Footer() {
-  const { author } = useSiteMetadata();
+  const { title, author } = useSiteMetadata();
   return (
-    <Flex as="footer" alignItems="center" direction="column" p={2} gap={2}>
+    <Flex as="footer" alignItems="center" direction="column" py={16} gap={2} bgGradient="linear(to-b, white, primary.200)">
+      <Heading as="h6" size="md">
+        {title}
+      </Heading>
       <Text fontSize="md">
         © {new Date().getFullYear()} {author} All rights reserved.
       </Text>

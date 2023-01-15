@@ -1,10 +1,11 @@
-import { extendTheme } from '@chakra-ui/react';
+import { extendTheme, theme as baseTheme } from '@chakra-ui/react';
 
 const theme = {
   colors: {
-    primary: 'teal.600',
+    primary: baseTheme.colors.blue,
+    secondary: baseTheme.colors.orange,
   },
 };
 
 export default extendTheme(theme);
-export const baseTheme = {};
+export { baseTheme };

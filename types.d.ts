@@ -9,6 +9,8 @@ export type SiteMetadata = {
 
 export type MicroCMSHello = {
   text: string;
+  updatedAt: string;
+  publishedAt: string;
 } & Node;
 
 export type MicroCMSBlogsCategory = {
