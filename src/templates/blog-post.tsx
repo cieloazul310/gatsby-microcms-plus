@@ -3,8 +3,8 @@ import { Link, graphql, type PageProps, type HeadProps } from 'gatsby';
 import { Box, Flex, VStack } from '@chakra-ui/react';
 import Seo from '../components/Seo';
 import Jumbotron from '../components/Jumbotron';
+import Paper from '../components/Paper';
 import useArticle from '../utils/useArticle';
-import useAlpha from '../utils/useAlpha';
 import type { MicroCMSBlogs } from '../../types';
 
 type BlogPostTemplateQueryData = {
@@ -23,15 +23,12 @@ function BlogsTemplate({ data }: PageProps<BlogPostTemplateQueryData, BlogPostTe
   const { microcmsBlogs, newer, older } = data;
   const { title, publishedAt, content } = microcmsBlogs;
   const body = useArticle(content);
-  const bg = useAlpha('primary.600', 0.08);
   return (
     <>
       <Jumbotron title={title} description={publishedAt} />
       <Flex py={4}>
         <VStack flexGrow={1} spacing={8} align="stretch" px={2}>
-          <Box as="article" rounded="xl" p={[4, 8]} bg={bg}>
-            {body}
-          </Box>
+          <Paper as="article">{body}</Paper>
           <nav>
             <div>
               {newer ? (
@@ -51,7 +48,7 @@ function BlogsTemplate({ data }: PageProps<BlogPostTemplateQueryData, BlogPostTe
             </div>
           </nav>
         </VStack>
-        <VStack spacing={8} align="stretch" width={320} display={['none', 'none', 'block']}>
+        <VStack spacing={8} align="stretch" width="320px" display={['none', 'none', 'block']}>
           <Box>aaa</Box>
         </VStack>
       </Flex>
