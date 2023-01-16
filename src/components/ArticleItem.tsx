@@ -9,9 +9,17 @@ type ArticleItemProps = Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt'>;
 function ArticleItem({ slug, title, publishedAt }: ArticleItemProps) {
   const bg = useAlpha('primary.600', 0.08);
   return (
-    <LinkBox as="article" rounded="xl" borderWidth="1px" transition="background .25s" _hover={{ bg }} display="flex">
+    <LinkBox
+      as="article"
+      rounded="xl"
+      borderWidth="1px"
+      transition="background .25s"
+      _hover={{ bg }}
+      display="flex"
+      flexDirection={['column', 'row']}
+    >
       <Box flexShrink="0" display="flex">
-        <AspectRatio bg={bg} ratio={[1, 1, 16 / 9]} width={['80px', '120px', '160px', '240px']}>
+        <AspectRatio bg={bg} ratio={16 / 9} width={['100%', '180px', '240px']}>
           <Text>hoge</Text>
         </AspectRatio>
       </Box>

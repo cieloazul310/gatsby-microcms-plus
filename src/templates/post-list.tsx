@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { Link as GatsbyLink, graphql, type PageProps, type HeadProps } from 'gatsby';
-import { Flex, Heading, VStack } from '@chakra-ui/react';
+import { graphql, type PageProps, type HeadProps } from 'gatsby';
+import { VStack } from '@chakra-ui/react';
+import BasicLayout from '../layout/Basic';
 import Seo from '../components/Seo';
-import Jumbotron from '../components/Jumbotron';
+import Paper from '../components/Paper';
 import ArticleItem from '../components/ArticleItem';
+import Pagination from '../components/Pagination';
 import type { MicroCMSBlogs } from '../../types';
 
 type PostListTemplateData = {
@@ -23,37 +25,18 @@ function PostListTemplate({ data, pageContext }: PageProps<PostListTemplateData,
   const { allMicrocmsBlogs } = data;
   const { numPages, currentPage } = pageContext;
   return (
-    <>
-      <Jumbotron height={240} title={`記事の一覧 (${currentPage}/${numPages})`} />
-      <Flex py={4}>
-        <VStack flexGrow={1} spacing={8} align="stretch" px={2}>
-          <VStack spacing={2} align="stretch">
-            <Heading as="h3" size="md">
-              最新記事
-            </Heading>
-            {allMicrocmsBlogs.nodes.map(({ slug, publishedAt, ...node }) => (
-              <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} />
-            ))}
-          </VStack>
-          <nav>
-            {currentPage !== 1 ? (
-              <div>
-                <GatsbyLink to={currentPage === 2 ? `/posts/` : `/posts/${currentPage - 1}/`}>
-                  {currentPage - 1}/{numPages}
-                </GatsbyLink>
-              </div>
-            ) : null}
-            {currentPage !== numPages ? (
-              <div>
-                <GatsbyLink to={`/posts/${currentPage + 1}/`}>
-                  {currentPage + 1}/{numPages}
-                </GatsbyLink>
-              </div>
-            ) : null}
-          </nav>
-        </VStack>
-      </Flex>
-    </>
+    <BasicLayout
+      jumbotronHeight={240}
+      title={`記事の一覧 (${currentPage}/${numPages})`}
+      sidebarContents={<Paper bgSchema="secondary">aaa</Paper>}
+    >
+      <VStack spacing={2} align="stretch">
+        {allMicrocmsBlogs.nodes.map(({ slug, publishedAt, ...node }) => (
+          <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} />
+        ))}
+      </VStack>
+      <Pagination currentPage={currentPage} numPages={numPages} basePath="/posts/" />
+    </BasicLayout>
   );
 }
 
