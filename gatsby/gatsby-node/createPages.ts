@@ -1,6 +1,6 @@
 import * as path from 'path';
 import type { CreatePagesArgs } from 'gatsby';
-import type { MicroCMSBlogs } from '../../types';
+import type { MicroCMSBlogs, MicroCMSCategories } from '../../types';
 
 type CreatePagesQueryData = {
   allMicrocmsBlogs: {
@@ -9,6 +9,9 @@ type CreatePagesQueryData = {
       fieldValue: string;
       totalCount: number;
     }[];
+  };
+  allMicrocmsCategories: {
+    nodes: Pick<MicroCMSCategories, 'name' | 'categoriesId'>[];
   };
 };
 
@@ -25,6 +28,11 @@ export default async function createPages({ graphql, actions, reporter }: Create
           totalCount
         }
       }
+      allMicrocmsCategories(sort: { sortIndex: ASC }) {
+        nodes {
+          categoriesId
+        }
+      }
     }
   `);
   if (result.errors) {
@@ -32,7 +40,7 @@ export default async function createPages({ graphql, actions, reporter }: Create
   }
   if (!result.data) throw new Error('There are no posts');
 
-  const { allMicrocmsBlogs } = result.data;
+  const { allMicrocmsBlogs, allMicrocmsCategories } = result.data;
 
   // create page for each post
   allMicrocmsBlogs.nodes.forEach(({ slug }, index) => {
@@ -67,10 +75,12 @@ export default async function createPages({ graphql, actions, reporter }: Create
   });
 
   // create page for each category
-  allMicrocmsBlogs.categories.forEach(({ fieldValue, totalCount }) => {
-    const numPagesForEachCategory = Math.ceil(totalCount / postsPerPage);
+  allMicrocmsCategories.nodes.forEach(({ categoriesId }) => {
+    const group = allMicrocmsBlogs.categories.find(({ fieldValue }) => fieldValue === categoriesId);
+    const totalCount = group?.totalCount ?? 0;
+    const numPagesForEachCategory = Math.ceil(totalCount / postsPerPage) || 1;
     Array.from({ length: numPagesForEachCategory }).forEach((_, index) => {
-      const basePath = `/categories/${fieldValue}/`;
+      const basePath = `/categories/${categoriesId}/`;
       createPage({
         path: index === 0 ? basePath : `${basePath}${index + 1}`,
         component: path.resolve('./src/templates/categories.tsx'),
@@ -79,7 +89,7 @@ export default async function createPages({ graphql, actions, reporter }: Create
           skip: index * postsPerPage,
           numPages: numPagesForEachCategory,
           currentPage: index + 1,
-          fieldValue,
+          fieldValue: categoriesId,
         },
       });
     });

@@ -3,6 +3,7 @@ import { graphql, type PageProps, type HeadProps } from 'gatsby';
 import { VStack } from '@chakra-ui/react';
 import BasicLayout from '../layout/Basic';
 import Seo from '../components/Seo';
+import Paper from '../components/Paper';
 import ArticleItem from '../components/ArticleItem';
 import Pagination from '../components/Pagination';
 import type { MicroCMSBlogs, MicroCMSCategories } from '../../types';
@@ -26,8 +27,9 @@ function CategoriesTemplate({ data, pageContext }: PageProps<CategoriesTemplateD
   const { allMicrocmsBlogs, microcmsCategories } = data;
   const { numPages, currentPage, fieldValue } = pageContext;
   return (
-    <BasicLayout jumbotronHeight={240} title={`${microcmsCategories.name} (${currentPage}/${numPages})`}>
+    <BasicLayout jumbotronHeight={240} title={microcmsCategories.name}>
       <VStack spacing={2} align="stretch">
+        {allMicrocmsBlogs.nodes.length === 0 ? <Paper>このカテゴリーは記事がありません。</Paper> : null}
         {allMicrocmsBlogs.nodes.map(({ slug, publishedAt, ...node }) => (
           <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} />
         ))}
