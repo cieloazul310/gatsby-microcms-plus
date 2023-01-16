@@ -18,7 +18,19 @@ function BasicLayout({ children, title, description, jumbotronHeight, sidebarCon
           {children}
         </VStack>
         {sidebarContents ? (
-          <VStack spacing={8} align="stretch" width={[0, 0, '240px', '320px']} display={['none', 'none', 'block']} px={2} flexShrink={0}>
+          <VStack
+            spacing={8}
+            align="stretch"
+            width={[0, 0, '240px', '320px']}
+            display={['none', 'none', 'block']}
+            px={2}
+            flexShrink={0}
+            position="sticky"
+            maxHeight="calc(100vh - 56px)"
+            overflowY="auto"
+            top="calc(56px + 1rem)"
+            right={0}
+          >
             {sidebarContents}
           </VStack>
         ) : null}

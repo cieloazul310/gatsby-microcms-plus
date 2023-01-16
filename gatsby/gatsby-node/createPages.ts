@@ -43,7 +43,7 @@ export default async function createPages({ graphql, actions, reporter }: Create
   });
 
   // create page for postlist page
-  const postsPerPage = 1;
+  const postsPerPage = 20;
   const numPages = Math.ceil(allMicrocmsBlogs.nodes.length / postsPerPage);
   Array.from({ length: numPages }).forEach((_, index) => {
     createPage({

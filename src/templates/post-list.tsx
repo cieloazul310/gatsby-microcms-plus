@@ -35,7 +35,7 @@ function PostListTemplate({ data, pageContext }: PageProps<PostListTemplateData,
           <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} />
         ))}
       </VStack>
-      <Pagination currentPage={currentPage} numPages={numPages} basePath="/posts/" />
+      {numPages !== 1 ? <Pagination currentPage={currentPage} numPages={numPages} basePath="/posts/" /> : null}
     </BasicLayout>
   );
 }

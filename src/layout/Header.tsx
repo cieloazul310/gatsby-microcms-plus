@@ -8,7 +8,17 @@ function Header() {
   const { title } = useSiteMetadata();
   const { color, bgGradient } = useGradientBox();
   return (
-    <Flex as="header" alignItems="center" gap={2} position="sticky" top={0} zIndex="sticky" color={color} bgGradient={bgGradient}>
+    <Flex
+      as="header"
+      alignItems="center"
+      gap={2}
+      position="sticky"
+      top={0}
+      zIndex="sticky"
+      color={color}
+      bgGradient={bgGradient}
+      height="56px"
+    >
       <Box px={4} py={2}>
         <Link
           href="/"

@@ -21,7 +21,15 @@ function IndexPage({ data }: PageProps<IndexPageData>) {
   const { title, description } = useSiteMetadata();
 
   return (
-    <BasicLayout title={title} description={description} sidebarContents={<Paper bgSchema="secondary">aaa</Paper>}>
+    <BasicLayout
+      title={title}
+      description={description}
+      sidebarContents={
+        <Paper bgSchema="secondary" height={1000}>
+          aaa
+        </Paper>
+      }
+    >
       <Paper as="article">
         <Heading as="h3" size="md" mb={4}>
           最初のAPI
@@ -42,38 +50,6 @@ function IndexPage({ data }: PageProps<IndexPageData>) {
       </div>
     </BasicLayout>
   );
-  /*
-  return (
-    <>
-      <Jumbotron title={title} description={description} />
-      <Flex py={4} px={2}>
-        <VStack flexGrow={1} spacing={8} align="stretch" px={2} maxWidth="100%">
-          <Paper as="article">
-            <Heading as="h3" size="md" mb={4}>
-              最初のAPI
-            </Heading>
-            <Text>{microcmsHello.text}</Text>
-            <Text color="gray.600">{microcmsHello.updatedAt} 更新</Text>
-          </Paper>
-          <div>
-            <VStack spacing={2} align="stretch">
-              <Heading as="h3" size="md">
-                最新記事
-              </Heading>
-              {allMicrocmsBlogs.nodes.map(({ slug, publishedAt, ...node }) => (
-                <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} />
-              ))}
-              <GatsbyLink to="/posts/">記事の一覧へ</GatsbyLink>
-            </VStack>
-          </div>
-        </VStack>
-        <VStack spacing={8} align="stretch" width="320px" display={['none', 'none', 'block']} px={2} flexShrink={0}>
-          <Paper bgSchema="secondary">aaa</Paper>
-        </VStack>
-      </Flex>
-    </>
-  );
-  */
 }
 
 export default IndexPage;
