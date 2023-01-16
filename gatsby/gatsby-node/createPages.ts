@@ -5,6 +5,10 @@ import type { MicroCMSBlogs } from '../../types';
 type CreatePagesQueryData = {
   allMicrocmsBlogs: {
     nodes: Pick<MicroCMSBlogs, 'slug'>[];
+    categories: {
+      fieldValue: string;
+      totalCount: number;
+    }[];
   };
 };
 
@@ -15,6 +19,10 @@ export default async function createPages({ graphql, actions, reporter }: Create
       allMicrocmsBlogs(sort: { publishedAt: DESC }) {
         nodes {
           slug
+        }
+        categories: group(field: { category: { id: SELECT } }) {
+          fieldValue
+          totalCount
         }
       }
     }
@@ -55,6 +63,25 @@ export default async function createPages({ graphql, actions, reporter }: Create
         numPages,
         currentPage: index + 1,
       },
+    });
+  });
+
+  // create page for each category
+  allMicrocmsBlogs.categories.forEach(({ fieldValue, totalCount }) => {
+    const numPagesForEachCategory = Math.ceil(totalCount / postsPerPage);
+    Array.from({ length: numPagesForEachCategory }).forEach((_, index) => {
+      const basePath = `/categories/${fieldValue}/`;
+      createPage({
+        path: index === 0 ? basePath : `${basePath}${index + 1}`,
+        component: path.resolve('./src/templates/categories.tsx'),
+        context: {
+          limit: postsPerPage,
+          skip: index * postsPerPage,
+          numPages: numPagesForEachCategory,
+          currentPage: index + 1,
+          fieldValue,
+        },
+      });
     });
   });
 }

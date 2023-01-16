@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Link as GatsbyLink, graphql, type PageProps } from 'gatsby';
+import { graphql, type PageProps } from 'gatsby';
 import { VStack, Text, Heading } from '@chakra-ui/react';
 import BasicLayout from '../layout/Basic';
 import Seo from '../components/Seo';
 import Paper from '../components/Paper';
-// import Jumbotron from '../components/Jumbotron';
+import PaperButton from '../components/PaperButton';
 import ArticleItem from '../components/ArticleItem';
 import useSiteMetadata from '../utils/useSiteMetadata';
 import type { MicroCMSHello, MicroCMSBlogs } from '../../types';
@@ -21,15 +21,7 @@ function IndexPage({ data }: PageProps<IndexPageData>) {
   const { title, description } = useSiteMetadata();
 
   return (
-    <BasicLayout
-      title={title}
-      description={description}
-      sidebarContents={
-        <Paper bgSchema="secondary" height={1000}>
-          aaa
-        </Paper>
-      }
-    >
+    <BasicLayout title={title} description={description}>
       <Paper as="article">
         <Heading as="h3" size="md" mb={4}>
           最初のAPI
@@ -45,7 +37,7 @@ function IndexPage({ data }: PageProps<IndexPageData>) {
           {allMicrocmsBlogs.nodes.map(({ slug, publishedAt, ...node }) => (
             <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} />
           ))}
-          <GatsbyLink to="/posts/">記事の一覧へ</GatsbyLink>
+          <PaperButton to="/posts/">記事の一覧へ</PaperButton>
         </VStack>
       </div>
     </BasicLayout>

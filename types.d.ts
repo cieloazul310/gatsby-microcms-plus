@@ -14,13 +14,19 @@ export type MicroCMSHello = {
 } & Node;
 
 export type MicroCMSBlogsCategory = {
-  id: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
   revisedAt: string;
+  id: string;
   name: string;
 };
+
+export type MicroCMSCategories = {
+  sortIndex: number;
+  categoriesId: string;
+} & MicroCMSBlogsCategory &
+  Node;
 
 export type MicroCMSBlogsEyecatch = {
   url: string;
@@ -36,7 +42,7 @@ export type MicroCMSBlogs = {
   title: string;
   content: string;
   eyecatch: MicroCMSBlogsEyecatch | null;
-  category: MicroCMSBlogsCategory | null;
+  category: Omit<MicroCMSBlogsCategory, ''> | null;
   sortIndex: number;
   blogsId: string;
   slug: string;

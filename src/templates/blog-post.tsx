@@ -24,7 +24,7 @@ function BlogsTemplate({ data }: PageProps<BlogPostTemplateQueryData, BlogPostTe
   const { title, publishedAt, content } = microcmsBlogs;
   const body = useArticle(content);
   return (
-    <BasicLayout title={title} description={publishedAt} sidebarContents={<Paper bgSchema="secondary">aaa</Paper>}>
+    <BasicLayout title={title} description={publishedAt}>
       <Paper as="article">{body}</Paper>
       <Navigation
         left={newer ? { slug: newer.slug, label: newer.title } : null}

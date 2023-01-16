@@ -12,7 +12,7 @@ type NavigationButtonProps = React.PropsWithChildren<{
 
 export function NavigationButton({ children, label, href, right = false }: NavigationButtonProps) {
   return (
-    <LinkBox width={['100%', '100%', '50%']}>
+    <LinkBox as="button" width={['100%', '100%', '50%']}>
       <Paper hover display="flex" flexDirection={right ? 'row-reverse' : 'row'} alignItems="center" gap={2}>
         <Icon w={8} h={8}>
           {right ? <ArrowForwardIcon /> : <ArrowBackIcon />}

@@ -39,6 +39,7 @@ const config: GatsbyConfig = {
         apis: [
           { endpoint: 'hello', format: 'object' },
           { endpoint: 'blogs', format: 'list' },
+          { endpoint: 'categories', format: 'list' },
         ],
       },
     },
