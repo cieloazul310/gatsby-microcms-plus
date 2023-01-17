@@ -5,11 +5,11 @@ import BasicLayout from '../layout/Basic';
 import Seo from '../components/Seo';
 import ArticleItem from '../components/ArticleItem';
 import Pagination from '../components/Pagination';
-import type { MicroCMSBlogs } from '../../types';
+import type { MicroCMSBlogsList } from '../../types';
 
 type PostListTemplateData = {
   allMicrocmsBlogs: {
-    nodes: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt'>[];
+    nodes: MicroCMSBlogsList[];
   };
 };
 
@@ -26,8 +26,8 @@ function PostListTemplate({ data, pageContext }: PageProps<PostListTemplateData,
   return (
     <BasicLayout jumbotronHeight={240} title={`記事の一覧 (${currentPage}/${numPages})`}>
       <VStack spacing={2} align="stretch">
-        {allMicrocmsBlogs.nodes.map(({ slug, publishedAt, ...node }) => (
-          <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} />
+        {allMicrocmsBlogs.nodes.map(({ slug, publishedAt, featuredImg, ...node }) => (
+          <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} featuredImg={featuredImg} />
         ))}
       </VStack>
       {numPages !== 1 ? <Pagination currentPage={currentPage} numPages={numPages} basePath="/posts/" /> : null}
@@ -47,9 +47,7 @@ export const query = graphql`
   query PostList($skip: Int!, $limit: Int!) {
     allMicrocmsBlogs(sort: { publishedAt: DESC }, limit: $limit, skip: $skip) {
       nodes {
-        slug
-        title
-        publishedAt(formatString: "YYYY年MM月DD日")
+        ...MicrocmsBlogsList
       }
     }
   }

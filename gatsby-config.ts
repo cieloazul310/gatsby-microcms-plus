@@ -3,13 +3,18 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
+const pathPrefix = '/gatsby-microcms-plus';
+const url = new URL(pathPrefix, 'https://cieloazul310.github.io');
+const siteUrl = url.toString();
+
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `Gatsby microCMS Example`,
     description: `Gatsby + microCMS`,
     author: `cieloazul310`,
+    siteUrl,
   },
-  pathPrefix: '/gatsby-microcms-plus',
+  pathPrefix,
   plugins: [
     {
       resolve: '@chakra-ui/gatsby-plugin',
@@ -43,6 +48,9 @@ const config: GatsbyConfig = {
         ],
       },
     },
+    `gatsby-plugin-image`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
   ],
 };
 

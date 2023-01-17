@@ -7,12 +7,12 @@ import Paper from '../components/Paper';
 import PaperButton from '../components/PaperButton';
 import ArticleItem from '../components/ArticleItem';
 import useSiteMetadata from '../utils/useSiteMetadata';
-import type { MicroCMSHello, MicroCMSBlogs } from '../../types';
+import type { MicroCMSHello, MicroCMSBlogsList } from '../../types';
 
 type IndexPageData = {
   microcmsHello: Pick<MicroCMSHello, 'text' | 'updatedAt'>;
   allMicrocmsBlogs: {
-    nodes: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt'>[];
+    nodes: MicroCMSBlogsList[];
   };
 };
 
@@ -34,8 +34,8 @@ function IndexPage({ data }: PageProps<IndexPageData>) {
           <Heading as="h3" size="md">
             最新記事
           </Heading>
-          {allMicrocmsBlogs.nodes.map(({ slug, publishedAt, ...node }) => (
-            <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} />
+          {allMicrocmsBlogs.nodes.map(({ slug, publishedAt, featuredImg, ...node }) => (
+            <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} featuredImg={featuredImg} />
           ))}
           <PaperButton to="/posts/">記事の一覧へ</PaperButton>
         </VStack>
@@ -58,9 +58,7 @@ export const query = graphql`
     }
     allMicrocmsBlogs(sort: { publishedAt: DESC }, limit: 8) {
       nodes {
-        slug
-        title
-        publishedAt(formatString: "YYYY年MM月DD日")
+        ...MicrocmsBlogsList
       }
     }
   }

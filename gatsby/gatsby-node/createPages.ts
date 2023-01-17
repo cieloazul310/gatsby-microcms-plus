@@ -9,6 +9,10 @@ type CreatePagesQueryData = {
       fieldValue: string;
       totalCount: number;
     }[];
+    months: {
+      fieldValue: string;
+      totalCount: number;
+    }[];
   };
   allMicrocmsCategories: {
     nodes: Pick<MicroCMSCategories, 'name' | 'categoriesId'>[];
@@ -27,6 +31,10 @@ export default async function createPages({ graphql, actions, reporter }: Create
           fieldValue
           totalCount
         }
+        months: group(field: { yymm: SELECT }) {
+          fieldValue
+          totalCount
+        }
       }
       allMicrocmsCategories(sort: { sortIndex: ASC }) {
         nodes {
@@ -42,7 +50,7 @@ export default async function createPages({ graphql, actions, reporter }: Create
 
   const { allMicrocmsBlogs, allMicrocmsCategories } = result.data;
 
-  // create page for each post
+  // create pages for each post
   allMicrocmsBlogs.nodes.forEach(({ slug }, index) => {
     const newer = index !== 0 ? allMicrocmsBlogs.nodes[index - 1].slug : null;
     const older = index !== allMicrocmsBlogs.nodes.length - 1 ? allMicrocmsBlogs.nodes[index + 1].slug : null;
@@ -58,8 +66,8 @@ export default async function createPages({ graphql, actions, reporter }: Create
     });
   });
 
-  // create page for postlist page
-  const postsPerPage = 20;
+  // create pages for postlist page
+  const postsPerPage = 1;
   const numPages = Math.ceil(allMicrocmsBlogs.nodes.length / postsPerPage);
   Array.from({ length: numPages }).forEach((_, index) => {
     createPage({
@@ -74,7 +82,7 @@ export default async function createPages({ graphql, actions, reporter }: Create
     });
   });
 
-  // create page for each category
+  // create pages for each category
   allMicrocmsCategories.nodes.forEach(({ categoriesId }) => {
     const group = allMicrocmsBlogs.categories.find(({ fieldValue }) => fieldValue === categoriesId);
     const totalCount = group?.totalCount ?? 0;
@@ -90,6 +98,24 @@ export default async function createPages({ graphql, actions, reporter }: Create
           numPages: numPagesForEachCategory,
           currentPage: index + 1,
           fieldValue: categoriesId,
+        },
+      });
+    });
+  });
+
+  // create pages for each months
+  allMicrocmsBlogs.months.forEach(({ fieldValue, totalCount }) => {
+    const numPagesForEachMonth = Math.ceil(totalCount / postsPerPage);
+    Array.from({ length: numPagesForEachMonth }).forEach((_, index) => {
+      createPage({
+        path: index === 0 ? `/${fieldValue}/` : `/${fieldValue}/${index + 1}`,
+        component: path.resolve('./src/templates/month.tsx'),
+        context: {
+          limit: postsPerPage,
+          skip: index * postsPerPage,
+          numPages: numPagesForEachMonth,
+          currentPage: index + 1,
+          fieldValue,
         },
       });
     });

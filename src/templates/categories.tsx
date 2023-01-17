@@ -6,11 +6,11 @@ import Seo from '../components/Seo';
 import Paper from '../components/Paper';
 import ArticleItem from '../components/ArticleItem';
 import Pagination from '../components/Pagination';
-import type { MicroCMSBlogs, MicroCMSCategories } from '../../types';
+import type { MicroCMSBlogsList, MicroCMSCategories } from '../../types';
 
 type CategoriesTemplateData = {
   allMicrocmsBlogs: {
-    nodes: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt'>[];
+    nodes: MicroCMSBlogsList[];
   };
   microcmsCategories: Pick<MicroCMSCategories, 'name'>;
 };
@@ -30,8 +30,8 @@ function CategoriesTemplate({ data, pageContext }: PageProps<CategoriesTemplateD
     <BasicLayout jumbotronHeight={240} title={microcmsCategories.name}>
       <VStack spacing={2} align="stretch">
         {allMicrocmsBlogs.nodes.length === 0 ? <Paper>このカテゴリーは記事がありません。</Paper> : null}
-        {allMicrocmsBlogs.nodes.map(({ slug, publishedAt, ...node }) => (
-          <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} />
+        {allMicrocmsBlogs.nodes.map(({ slug, publishedAt, featuredImg, ...node }) => (
+          <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} featuredImg={featuredImg} />
         ))}
       </VStack>
       {numPages !== 1 ? <Pagination currentPage={currentPage} numPages={numPages} basePath={`/categories/${fieldValue}/`} /> : null}
@@ -52,9 +52,7 @@ export const query = graphql`
   query CategoryPostList($skip: Int!, $limit: Int!, $fieldValue: String!) {
     allMicrocmsBlogs(filter: { category: { id: { eq: $fieldValue } } }, sort: { publishedAt: DESC }, limit: $limit, skip: $skip) {
       nodes {
-        slug
-        title
-        publishedAt(formatString: "YYYY年MM月DD日")
+        ...MicrocmsBlogsList
       }
     }
     microcmsCategories(categoriesId: { eq: $fieldValue }) {

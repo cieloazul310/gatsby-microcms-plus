@@ -8,7 +8,7 @@ function Sidebar() {
   const categories = useAllCategories();
   return (
     <>
-      <VStack spacing={2}>
+      <VStack spacing={2} as="nav">
         {categories.map(({ name, categoriesId }) => (
           <PaperButton key={categoriesId} to={`/categories/${categoriesId}/`} width="100%">
             {name}

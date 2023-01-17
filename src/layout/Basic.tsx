@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Flex, VStack } from '@chakra-ui/react';
+import { useLocation } from '@reach/router';
 import Jumbotron from '../components/Jumbotron';
+import PaperButton from '../components/PaperButton';
 import Sidebar from './Sidebar';
 
 type BasicLayoutProps = React.PropsWithChildren<{
@@ -12,12 +14,14 @@ type BasicLayoutProps = React.PropsWithChildren<{
 }>;
 
 function BasicLayout({ children, title, description, jumbotronHeight, sidebarContents, disableSidebar = false }: BasicLayoutProps) {
+  const { pathname } = useLocation();
   return (
     <>
       <Jumbotron title={title} description={description} height={jumbotronHeight} />
       <Flex py={4} px={2}>
         <VStack flexGrow={1} spacing={4} align="stretch" px={[0, 2]} maxWidth="100%">
           {children}
+          {pathname !== '/' ? <PaperButton to="/">トップページへ</PaperButton> : null}
         </VStack>
         {!disableSidebar ? (
           <VStack

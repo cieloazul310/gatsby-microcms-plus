@@ -1,4 +1,5 @@
 import type { Node } from 'gatsby';
+import type { ImageDataLike } from 'gatsby-plugin-image';
 
 export type SiteMetadata = {
   title: string;
@@ -46,4 +47,7 @@ export type MicroCMSBlogs = {
   sortIndex: number;
   blogsId: string;
   slug: string;
+  featuredImg: ImageDataLike | null;
 } & Node;
+
+export type MicroCMSBlogsList = Pick<MicroCMSBlogs, 'title' | 'slug' | 'featuredImg' | 'publishedAt'>;

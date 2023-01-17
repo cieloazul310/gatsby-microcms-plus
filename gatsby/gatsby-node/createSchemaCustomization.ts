@@ -6,14 +6,33 @@ export default async function createSchemaCustomization({ actions, schema }: Cre
   const { createTypes } = actions;
   createTypes(`
     type MicrocmsBlogs implements Node {
+      year: Int!
+      yymm: String!
       slug: String!
-      excerpt: String!
+      featuredImg: File @link(from: "fields.localFile")
+      excerpt: String
     }
   `);
   createTypes(
     schema.buildObjectType({
       name: `MicrocmsBlogs`,
       fields: {
+        year: {
+          type: `Int!`,
+          resolve: ({ publishedAt }: Pick<MicroCMSBlogs, 'publishedAt'>) => {
+            const date = new Date(publishedAt);
+            return date.getFullYear();
+          },
+        },
+        yymm: {
+          type: `String!`,
+          resolve: ({ publishedAt }: Pick<MicroCMSBlogs, 'publishedAt'>) => {
+            const date = new Date(publishedAt);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            return `${year}/${month.toString().padStart(2, '0')}`;
+          },
+        },
         slug: {
           type: `String!`,
           resolve: ({ blogsId, publishedAt }: Pick<MicroCMSBlogs, 'blogsId' | 'publishedAt'>) => {

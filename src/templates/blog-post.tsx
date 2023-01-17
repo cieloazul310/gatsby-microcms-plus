@@ -5,10 +5,11 @@ import Seo from '../components/Seo';
 import Paper from '../components/Paper';
 import Navigation from '../components/Navigation';
 import useArticle from '../utils/useArticle';
+import useAssetUrl from '../utils/useAssetUrl';
 import type { MicroCMSBlogs } from '../../types';
 
 type BlogPostTemplateQueryData = {
-  microcmsBlogs: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt' | 'content'>;
+  microcmsBlogs: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt' | 'content' | 'featuredImg'>;
   newer: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt'> | null;
   older: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt'> | null;
 };
@@ -38,7 +39,9 @@ export default BlogsTemplate;
 
 export function Head({ data }: HeadProps<BlogPostTemplateQueryData, BlogPostTemplatePageContext>) {
   const { microcmsBlogs } = data;
-  return <Seo title={microcmsBlogs.title} />;
+  const image = microcmsBlogs.featuredImg?.childImageSharp?.original?.src;
+  const imageUrl = useAssetUrl(image);
+  return <Seo title={microcmsBlogs.title} image={imageUrl} />;
 }
 
 export const query = graphql`
@@ -48,6 +51,13 @@ export const query = graphql`
       title
       publishedAt(formatString: "YYYY年MM月DD日")
       content
+      featuredImg {
+        childImageSharp {
+          original {
+            src
+          }
+        }
+      }
     }
     newer: microcmsBlogs(slug: { eq: $newer }) {
       slug
