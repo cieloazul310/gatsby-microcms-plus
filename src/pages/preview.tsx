@@ -25,9 +25,14 @@ type PreviewTemplateQueryData = {
 };
 
 function Preview({ location }: PageProps<PreviewTemplateQueryData>) {
-  const url = new URL(location.href);
-  const contentId = url.searchParams.get('contentId');
-  const draftKey = url.searchParams.get('draftKey');
+  const { contentId, draftKey } = React.useMemo(() => {
+    if (typeof window !== 'object') return { contentId: null, draftKey: null };
+    const url = new URL(location.href);
+    const id = url.searchParams.get('contentId');
+    const key = url.searchParams.get('draftKey');
+    return { contentId: id, draftKey: key };
+  }, [location]);
+
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const initialRef = React.useRef<HTMLInputElement | null>(null);
 
