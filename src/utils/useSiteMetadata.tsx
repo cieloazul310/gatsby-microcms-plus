@@ -15,6 +15,7 @@ function useSiteMetadata() {
           title
           description
           author
+          siteUrl
         }
       }
     }

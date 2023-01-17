@@ -1,11 +1,15 @@
 import * as React from 'react';
-import { Link, graphql, type PageProps, type HeadProps } from 'gatsby';
+import { graphql, type PageProps, type HeadProps } from 'gatsby';
+import { VStack } from '@chakra-ui/react';
+import BasicLayout from '../layout/Basic';
 import Seo from '../components/Seo';
-import type { MicroCMSBlogs } from '../../types';
+import ArticleItem from '../components/ArticleItem';
+import Pagination from '../components/Pagination';
+import type { MicroCMSBlogsList } from '../../types';
 
 type PostListTemplateData = {
   allMicrocmsBlogs: {
-    nodes: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt'>[];
+    nodes: MicroCMSBlogsList[];
   };
 };
 
@@ -20,39 +24,14 @@ function PostListTemplate({ data, pageContext }: PageProps<PostListTemplateData,
   const { allMicrocmsBlogs } = data;
   const { numPages, currentPage } = pageContext;
   return (
-    <>
-      <div>
-        <h2>
-          記事の一覧 ({currentPage}/{numPages})
-        </h2>
-        <ul>
-          {allMicrocmsBlogs.nodes.map((node) => (
-            <li key={node.slug}>
-              <Link to={node.slug}>
-                <p>{node.title}</p>
-                <small>{node.publishedAt}</small>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <nav>
-        {currentPage !== 1 ? (
-          <div>
-            <Link to={currentPage === 2 ? `/posts/` : `/posts/${currentPage - 1}/`}>
-              {currentPage - 1}/{numPages}
-            </Link>
-          </div>
-        ) : null}
-        {currentPage !== numPages ? (
-          <div>
-            <Link to={`/posts/${currentPage + 1}/`}>
-              {currentPage + 1}/{numPages}
-            </Link>
-          </div>
-        ) : null}
-      </nav>
-    </>
+    <BasicLayout jumbotronHeight={240} title={`記事の一覧 (${currentPage}/${numPages})`}>
+      <VStack spacing={2} align="stretch">
+        {allMicrocmsBlogs.nodes.map(({ slug, publishedAt, featuredImg, ...node }) => (
+          <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} featuredImg={featuredImg} />
+        ))}
+      </VStack>
+      {numPages !== 1 ? <Pagination currentPage={currentPage} numPages={numPages} basePath="/posts/" /> : null}
+    </BasicLayout>
   );
 }
 
@@ -68,9 +47,7 @@ export const query = graphql`
   query PostList($skip: Int!, $limit: Int!) {
     allMicrocmsBlogs(sort: { publishedAt: DESC }, limit: $limit, skip: $skip) {
       nodes {
-        slug
-        title
-        publishedAt(formatString: "YYYY年MM月DD日")
+        ...MicrocmsBlogsList
       }
     }
   }

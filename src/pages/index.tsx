@@ -1,43 +1,46 @@
 import * as React from 'react';
-import { Link, graphql, type PageProps } from 'gatsby';
+import { graphql, type PageProps } from 'gatsby';
+import { VStack, Text, Heading } from '@chakra-ui/react';
+import BasicLayout from '../layout/Basic';
 import Seo from '../components/Seo';
+import Paper from '../components/Paper';
+import PaperButton from '../components/PaperButton';
+import ArticleItem from '../components/ArticleItem';
 import useSiteMetadata from '../utils/useSiteMetadata';
-import type { MicroCMSHello, MicroCMSBlogs } from '../../types';
+import type { MicroCMSHello, MicroCMSBlogsList } from '../../types';
 
 type IndexPageData = {
-  microcmsHello: Pick<MicroCMSHello, 'text'>;
+  microcmsHello: Pick<MicroCMSHello, 'text' | 'updatedAt'>;
   allMicrocmsBlogs: {
-    nodes: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt'>[];
+    nodes: MicroCMSBlogsList[];
   };
 };
 
 function IndexPage({ data }: PageProps<IndexPageData>) {
   const { microcmsHello, allMicrocmsBlogs } = data;
   const { title, description } = useSiteMetadata();
+
   return (
-    <>
-      <header>
-        <h1>{title}</h1>
-        <p>{description}</p>
-      </header>
-      <article>
-        <p>{microcmsHello.text}</p>
-      </article>
+    <BasicLayout title={title} description={description}>
+      <Paper as="article">
+        <Heading as="h3" size="md" mb={4}>
+          最初のAPI
+        </Heading>
+        <Text>{microcmsHello.text}</Text>
+        <Text color="gray.600">{microcmsHello.updatedAt} 更新</Text>
+      </Paper>
       <div>
-        <h2>最新記事</h2>
-        <ul>
-          {allMicrocmsBlogs.nodes.map((node) => (
-            <li key={node.slug}>
-              <Link to={node.slug}>
-                <p>{node.title}</p>
-                <small>{node.publishedAt}</small>
-              </Link>
-            </li>
+        <VStack spacing={2} align="stretch">
+          <Heading as="h3" size="md">
+            最新記事
+          </Heading>
+          {allMicrocmsBlogs.nodes.map(({ slug, publishedAt, featuredImg, ...node }) => (
+            <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} featuredImg={featuredImg} />
           ))}
-        </ul>
-        <Link to="/posts/">記事の一覧へ</Link>
+          <PaperButton to="/posts/">記事の一覧へ</PaperButton>
+        </VStack>
       </div>
-    </>
+    </BasicLayout>
   );
 }
 
@@ -51,12 +54,11 @@ export const query = graphql`
   {
     microcmsHello {
       text
+      updatedAt(formatString: "YYYY年MM月DD日")
     }
     allMicrocmsBlogs(sort: { publishedAt: DESC }, limit: 8) {
       nodes {
-        slug
-        title
-        publishedAt(formatString: "YYYY年MM月DD日")
+        ...MicrocmsBlogsList
       }
     }
   }

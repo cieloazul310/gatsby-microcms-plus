@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { useLocation } from '@reach/router';
+import { Code } from '@chakra-ui/react';
+import BasicLayout from '../layout/Basic';
+import Paper from '../components/Paper';
 
 function NotFoundPage() {
   const { pathname } = useLocation();
   return (
-    <div>
-      <h1>404 Not found</h1>
-      <p>
-        <code>{pathname}</code> is not found.
-      </p>
-    </div>
+    <BasicLayout title="404 Not found">
+      <Paper>
+        <Code>{pathname}</Code> is not found.
+      </Paper>
+    </BasicLayout>
   );
 }
 

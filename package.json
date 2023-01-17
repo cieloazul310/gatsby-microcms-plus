@@ -12,9 +12,22 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@chakra-ui/gatsby-plugin": "^3.1.1",
+    "@chakra-ui/icons": "^2.0.16",
+    "@chakra-ui/react": "^2.4.8",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "colord": "^2.9.3",
     "dotenv": "^16.0.3",
+    "framer-motion": "^8.4.3",
     "gatsby": "^5.4.0",
+    "gatsby-plugin-image": "^3.4.0",
+    "gatsby-plugin-sharp": "^5.4.0",
+    "gatsby-source-filesystem": "^5.4.0",
     "gatsby-source-microcms": "^3.0.0",
+    "gatsby-transformer-sharp": "^5.4.0",
+    "html-dom-parser": "^3.1.2",
+    "html-react-parser": "^3.0.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

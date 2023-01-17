@@ -1,4 +1,5 @@
 import type { Node } from 'gatsby';
+import type { ImageDataLike } from 'gatsby-plugin-image';
 
 export type SiteMetadata = {
   title: string;
@@ -9,16 +10,24 @@ export type SiteMetadata = {
 
 export type MicroCMSHello = {
   text: string;
+  updatedAt: string;
+  publishedAt: string;
 } & Node;
 
 export type MicroCMSBlogsCategory = {
-  id: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
   revisedAt: string;
+  id: string;
   name: string;
 };
+
+export type MicroCMSCategories = {
+  sortIndex: number;
+  categoriesId: string;
+} & MicroCMSBlogsCategory &
+  Node;
 
 export type MicroCMSBlogsEyecatch = {
   url: string;
@@ -34,8 +43,11 @@ export type MicroCMSBlogs = {
   title: string;
   content: string;
   eyecatch: MicroCMSBlogsEyecatch | null;
-  category: MicroCMSBlogsCategory | null;
+  category: Omit<MicroCMSBlogsCategory, ''> | null;
   sortIndex: number;
   blogsId: string;
   slug: string;
+  featuredImg: ImageDataLike | null;
 } & Node;
+
+export type MicroCMSBlogsList = Pick<MicroCMSBlogs, 'title' | 'slug' | 'featuredImg' | 'publishedAt'>;
