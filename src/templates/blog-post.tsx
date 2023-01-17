@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { graphql, type PageProps, type HeadProps } from 'gatsby';
+import { getSrc } from 'gatsby-plugin-image';
 import BasicLayout from '../layout/Basic';
 import Seo from '../components/Seo';
 import Paper from '../components/Paper';
 import Navigation from '../components/Navigation';
 import useArticle from '../utils/useArticle';
-import useAssetUrl from '../utils/useAssetUrl';
 import type { MicroCMSBlogs } from '../../types';
 
 type BlogPostTemplateQueryData = {
@@ -39,8 +39,7 @@ export default BlogsTemplate;
 
 export function Head({ data }: HeadProps<BlogPostTemplateQueryData, BlogPostTemplatePageContext>) {
   const { microcmsBlogs } = data;
-  const image = microcmsBlogs.featuredImg?.childImageSharp?.original?.src;
-  const imageUrl = useAssetUrl(image);
+  const imageUrl = microcmsBlogs.featuredImg ? getSrc(microcmsBlogs.featuredImg) : undefined;
   return <Seo title={microcmsBlogs.title} image={imageUrl} />;
 }
 
@@ -53,9 +52,7 @@ export const query = graphql`
       content
       featuredImg {
         childImageSharp {
-          original {
-            src
-          }
+          gatsbyImageData
         }
       }
     }

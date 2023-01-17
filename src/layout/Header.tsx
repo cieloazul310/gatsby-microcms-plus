@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Flex, Box, Spacer, Heading, ButtonGroup, Button, Hide } from '@chakra-ui/react';
+import { Flex, Box, Spacer, Heading, ButtonGroup, Button, Hide, IconButton, useColorMode } from '@chakra-ui/react';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import Link from '../components/Link';
 import useGradientBox from '../utils/useGradientBox';
 import useSiteMetadata from '../utils/useSiteMetadata';
@@ -7,6 +8,8 @@ import useSiteMetadata from '../utils/useSiteMetadata';
 function Header() {
   const { title } = useSiteMetadata();
   const { color, bgGradient } = useGradientBox();
+  const { colorMode, toggleColorMode } = useColorMode();
+
   return (
     <Flex
       as="header"
@@ -35,8 +38,8 @@ function Header() {
       <Spacer />
       <Hide below="sm">
         <ButtonGroup gap="2" px={4} py={2} colorScheme="primary">
-          <Button>Sign Up</Button>
-          <Button>Log in</Button>
+          <Button>About</Button>
+          <IconButton onClick={toggleColorMode} icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />} aria-label="toggle color mode" />
         </ButtonGroup>
       </Hide>
     </Flex>

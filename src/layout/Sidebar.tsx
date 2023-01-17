@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { VStack } from '@chakra-ui/react';
-// import Paper from '../components/Paper';
 import PaperButton from '../components/PaperButton';
 import useAllCategories from '../utils/useAllCategories';
 import useAllMonths from '../utils/useAllMonths';
