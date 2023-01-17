@@ -2,6 +2,11 @@ import * as path from 'path';
 import type { CreatePagesArgs } from 'gatsby';
 import type { MicroCMSBlogs, MicroCMSCategories } from '../../types';
 
+function parseYYMM(yymm: string) {
+  const [year, month] = yymm.split('/');
+  return { year: parseInt(year, 10), month: parseInt(month, 10) };
+}
+
 type CreatePagesQueryData = {
   allMicrocmsBlogs: {
     nodes: Pick<MicroCMSBlogs, 'slug'>[];
@@ -67,7 +72,7 @@ export default async function createPages({ graphql, actions, reporter }: Create
   });
 
   // create pages for postlist page
-  const postsPerPage = 1;
+  const postsPerPage = 20;
   const numPages = Math.ceil(allMicrocmsBlogs.nodes.length / postsPerPage);
   Array.from({ length: numPages }).forEach((_, index) => {
     createPage({
@@ -104,20 +109,39 @@ export default async function createPages({ graphql, actions, reporter }: Create
   });
 
   // create pages for each months
-  allMicrocmsBlogs.months.forEach(({ fieldValue, totalCount }) => {
-    const numPagesForEachMonth = Math.ceil(totalCount / postsPerPage);
-    Array.from({ length: numPagesForEachMonth }).forEach((_, index) => {
-      createPage({
-        path: index === 0 ? `/${fieldValue}/` : `/${fieldValue}/${index + 1}`,
-        component: path.resolve('./src/templates/month.tsx'),
-        context: {
-          limit: postsPerPage,
-          skip: index * postsPerPage,
-          numPages: numPagesForEachMonth,
-          currentPage: index + 1,
-          fieldValue,
-        },
+  const { months } = allMicrocmsBlogs;
+  [...months]
+    .map(({ fieldValue, ...group }) => ({ ...parseYYMM(fieldValue), ...group, fieldValue }))
+    .sort((a, b) => a.year - b.year || a.month - b.month)
+    .forEach(({ fieldValue, totalCount }, i, arr) => {
+      const numPagesForEachMonth = Math.ceil(totalCount / postsPerPage);
+      const older = i !== 0 ? arr[i - 1] : null;
+      const newer = i !== arr.length - 1 ? arr[i + 1] : null;
+
+      Array.from({ length: numPagesForEachMonth }).forEach((_, index) => {
+        createPage({
+          path: index === 0 ? `/${fieldValue}/` : `/${fieldValue}/${index + 1}`,
+          component: path.resolve('./src/templates/month.tsx'),
+          context: {
+            limit: postsPerPage,
+            skip: index * postsPerPage,
+            numPages: numPagesForEachMonth,
+            currentPage: index + 1,
+            fieldValue,
+            older: older
+              ? {
+                  slug: `/${older.fieldValue}/`,
+                  label: `${older.year}年${older.month}月`,
+                }
+              : null,
+            newer: newer
+              ? {
+                  slug: `/${newer.fieldValue}/`,
+                  label: `${newer.year}年${newer.month}月`,
+                }
+              : null,
+          },
+        });
       });
     });
-  });
 }

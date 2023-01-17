@@ -5,12 +5,9 @@ import BasicLayout from '../layout/Basic';
 import Seo from '../components/Seo';
 import ArticleItem from '../components/ArticleItem';
 import Pagination from '../components/Pagination';
+import Navigation from '../components/Navigation';
+import parseYYMM from '../utils/parseYYMM';
 import type { MicroCMSBlogs } from '../../types';
-
-function parseYYMM(yymm: string) {
-  const [year, month] = yymm.split('/');
-  return { year, month: parseInt(month, 10) };
-}
 
 type MonthTemplateData = {
   allMicrocmsBlogs: {
@@ -24,11 +21,19 @@ type MonthTemplatePageContext = {
   numPages: number;
   currentPage: number;
   fieldValue: string;
+  older: {
+    slug: string;
+    label: string;
+  } | null;
+  newer: {
+    slug: string;
+    label: string;
+  } | null;
 };
 
 function MonthTemplate({ data, pageContext }: PageProps<MonthTemplateData, MonthTemplatePageContext>) {
   const { allMicrocmsBlogs } = data;
-  const { numPages, currentPage, fieldValue } = pageContext;
+  const { numPages, currentPage, fieldValue, newer, older } = pageContext;
   const { year, month } = parseYYMM(fieldValue);
   return (
     <BasicLayout jumbotronHeight={240} title={`${year}年${month}月の記事`}>
@@ -38,6 +43,7 @@ function MonthTemplate({ data, pageContext }: PageProps<MonthTemplateData, Month
         ))}
       </VStack>
       {numPages !== 1 ? <Pagination currentPage={currentPage} numPages={numPages} basePath={`/${fieldValue}/`} /> : null}
+      <Navigation left={newer} right={older} />
     </BasicLayout>
   );
 }

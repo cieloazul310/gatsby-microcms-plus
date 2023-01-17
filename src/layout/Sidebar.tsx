@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { VStack } from '@chakra-ui/react';
-import Paper from '../components/Paper';
+// import Paper from '../components/Paper';
 import PaperButton from '../components/PaperButton';
 import useAllCategories from '../utils/useAllCategories';
+import useAllMonths from '../utils/useAllMonths';
 
 function Sidebar() {
   const categories = useAllCategories();
+  const months = useAllMonths();
   return (
     <>
       <VStack spacing={2} as="nav">
@@ -15,7 +17,13 @@ function Sidebar() {
           </PaperButton>
         ))}
       </VStack>
-      <Paper bgSchema="secondary">hoge</Paper>
+      <VStack spacing={2} as="nav">
+        {months.map(({ year, month, path }) => (
+          <PaperButton key={path} to={path} width="100%">
+            {year}年{month}月
+          </PaperButton>
+        ))}
+      </VStack>
     </>
   );
 }
