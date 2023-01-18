@@ -36,6 +36,8 @@ const options: HTMLReactParserOptions = {
 
     if (name === 'iframe') return <chakraComponents.iframe {...props}>{domToReact(domNode.children, options)}</chakraComponents.iframe>;
 
+    // if (name === 'code') return <chakraComponents.code {...props}>{domToReact(domNode.children, options)}</chakraComponents.code>;
+
     if (name === 'pre') return <chakraComponents.pre {...props}>{domToReact(domNode.children, options)}</chakraComponents.pre>;
     return null;
   },

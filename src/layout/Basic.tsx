@@ -35,7 +35,7 @@ function BasicLayout({
       <Flex py={4} px={2}>
         <VStack flexGrow={1} spacing={4} align="stretch" px={[0, 2]} maxWidth="100%">
           {children}
-          {pathname !== '/' ? <PaperButton to="/">トップページへ</PaperButton> : null}
+          {pathname !== '/' ? <PaperButton href="/">トップページへ</PaperButton> : null}
         </VStack>
         {!disableSidebar ? (
           <VStack
@@ -47,7 +47,7 @@ function BasicLayout({
             pb={8}
             flexShrink={0}
             position="sticky"
-            maxHeight="calc(100vh - 56px)"
+            // maxHeight="calc(100vh - 56px)"
             overflowY="auto"
             top="calc(56px + 1rem)"
             right={0}

@@ -8,47 +8,53 @@ export type SiteMetadata = {
   author: string;
 };
 
-export type MicroCMSHello = {
-  text: string;
-  updatedAt: string;
-  publishedAt: string;
-} & Node;
-
-export type MicroCMSBlogsCategory = {
+/**
+ * コンテンツ(API)に自動付与される値
+ * https://document.microcms.io/manual/automatic-grant-fields
+ */
+export type MicrocmsDefaultFields = {
+  /** コンテンツの作成日時 */
   createdAt: string;
+  /** コンテンツの更新日時 */
   updatedAt: string;
+  /** コンテンツの公開日時 */
   publishedAt: string;
+  /** コンテンツの改定日時 */
   revisedAt: string;
-  id: string;
-  name: string;
+  /** コンテンツの表示順 (0が最上位) */
+  sortIndex: number;
 };
 
-export type MicroCMSCategories = {
-  sortIndex: number;
-  categoriesId: string;
-} & MicroCMSBlogsCategory &
+export type MicrocmsHello = {
+  text: string;
+} & Omit<MicrocmsDefaultFields, 'sortIndex'> &
   Node;
 
-export type MicroCMSBlogsEyecatch = {
+export type MicrocmsCategories = {
+  name: string;
+  categoriesId: string;
+} & MicrocmsDefaultFields &
+  Node;
+
+export type MicrocmsBlogsCategory = Pick<MicrocmsCategories, 'id' | 'createdAt' | 'updatedAt' | 'publishedAt' | 'revisedAt' | 'name'>;
+
+export type MicrocmsBlogsEyecatch = {
   url: string;
   height: number;
   width: number;
 };
 
-export type MicroCMSBlogs = {
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  revisedAt: string;
+export type MicrocmsBlogs = {
+  blogsId: string;
   title: string;
   content: string;
-  excerpt: string;
-  eyecatch: MicroCMSBlogsEyecatch | null;
-  category: Omit<MicroCMSBlogsCategory, ''> | null;
-  sortIndex: number;
-  blogsId: string;
-  slug: string;
-  featuredImg: ImageDataLike | null;
-} & Node;
+  eyecatch: MicrocmsBlogsEyecatch | null;
+  category: MicrocmsBlogsCategory | null;
+} & MicrocmsDefaultFields &
+  Node & {
+    slug: string;
+    excerpt: string;
+    featuredImg: ImageDataLike | null;
+  };
 
-export type MicroCMSBlogsList = Pick<MicroCMSBlogs, 'title' | 'slug' | 'featuredImg' | 'publishedAt' | 'excerpt'>;
+export type MicrocmsBlogsList = Pick<MicrocmsBlogs, 'title' | 'slug' | 'featuredImg' | 'publishedAt' | 'excerpt'>;

@@ -1,6 +1,6 @@
 import type { CreateSchemaCustomizationArgs } from 'gatsby';
 import { convert } from 'html-to-text';
-import type { MicroCMSBlogs } from '../../types';
+import type { MicrocmsBlogs } from '../../types';
 
 export default async function createSchemaCustomization({ actions, schema }: CreateSchemaCustomizationArgs) {
   const { createTypes } = actions;
@@ -19,14 +19,14 @@ export default async function createSchemaCustomization({ actions, schema }: Cre
       fields: {
         year: {
           type: `Int!`,
-          resolve: ({ publishedAt }: Pick<MicroCMSBlogs, 'publishedAt'>) => {
+          resolve: ({ publishedAt }: Pick<MicrocmsBlogs, 'publishedAt'>) => {
             const date = new Date(publishedAt);
             return date.getFullYear();
           },
         },
         yymm: {
           type: `String!`,
-          resolve: ({ publishedAt }: Pick<MicroCMSBlogs, 'publishedAt'>) => {
+          resolve: ({ publishedAt }: Pick<MicrocmsBlogs, 'publishedAt'>) => {
             const date = new Date(publishedAt);
             const year = date.getFullYear();
             const month = date.getMonth() + 1;
@@ -35,7 +35,7 @@ export default async function createSchemaCustomization({ actions, schema }: Cre
         },
         slug: {
           type: `String!`,
-          resolve: ({ blogsId, publishedAt }: Pick<MicroCMSBlogs, 'blogsId' | 'publishedAt'>) => {
+          resolve: ({ blogsId, publishedAt }: Pick<MicrocmsBlogs, 'blogsId' | 'publishedAt'>) => {
             const date = new Date(publishedAt);
             const year = date.getFullYear();
             const month = date.getMonth() + 1;
@@ -47,7 +47,7 @@ export default async function createSchemaCustomization({ actions, schema }: Cre
           args: {
             length: 'Int',
           },
-          resolve: ({ content }: Pick<MicroCMSBlogs, 'content'>, { length }: { length: number | undefined }) => {
+          resolve: ({ content }: Pick<MicrocmsBlogs, 'content'>, { length }: { length: number | undefined }) => {
             const text = convert(content, {
               baseElements: { selectors: ['p'] },
               selectors: [

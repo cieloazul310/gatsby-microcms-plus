@@ -13,7 +13,7 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import DrawerInner from './DrawerInner';
+import DrawerMenu from './DrawerMenu';
 import useSiteMetadata from '../utils/useSiteMetadata';
 
 type DrawerProps = {
@@ -25,13 +25,13 @@ function DrawerContent({ drawerContents, onClose }: DrawerProps) {
   const { colorMode, toggleColorMode } = useColorMode();
   const { title } = useSiteMetadata();
   return (
-    <ChakraDrawerContent>
+    <ChakraDrawerContent maxHeight="75vh">
       <DrawerCloseButton />
       <DrawerHeader>{title}</DrawerHeader>
       <DrawerBody>
         <VStack spacing={2} align="stretch">
           {drawerContents}
-          <DrawerInner />
+          <DrawerMenu />
         </VStack>
       </DrawerBody>
       <DrawerFooter>

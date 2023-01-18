@@ -3,14 +3,14 @@ import { VStack } from '@chakra-ui/react';
 import PaperButton from '../components/PaperButton';
 import useMenu from '../utils/useMenu';
 
-function Sidebar() {
+function DrawerMenu() {
   const menu = useMenu();
   return (
     <>
       {menu.map(({ name, items }) => (
-        <VStack key={name} spacing={2} as="nav">
+        <VStack key={name} spacing={1}>
           {items.map(({ path, ...item }) => (
-            <PaperButton key={item.name} href={path} width="100%">
+            <PaperButton key={item.name} href={path} width="100%" size="sm">
               {item.name}
             </PaperButton>
           ))}
@@ -20,4 +20,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default DrawerMenu;

@@ -16,6 +16,13 @@ function useMenu() {
         name: 'Archive',
         items: months.map(({ year, month, path }) => ({ name: `${year}年${month}月`, path })),
       },
+      {
+        name: 'SNS',
+        items: [
+          { name: 'Twitter', path: 'https://twitter.com/cieloazul310' },
+          { name: 'GitHub', path: 'https://github.com/cieloazul310' },
+        ],
+      },
     ],
     [categories, months]
   );

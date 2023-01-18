@@ -3,11 +3,11 @@ import { Link as GatsbyLink } from 'gatsby';
 import { chakra, Box, AspectRatio, LinkBox, LinkOverlay, Text, Heading } from '@chakra-ui/react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import useAlpha from '../utils/useAlpha';
-import type { MicroCMSBlogsList } from '../../types';
+import type { MicrocmsBlogsList } from '../../types';
 
 const Image = chakra('image');
 
-type ArticleItemProps = MicroCMSBlogsList;
+type ArticleItemProps = MicrocmsBlogsList;
 
 function ArticleItem({ slug, title, publishedAt, featuredImg, excerpt }: ArticleItemProps) {
   const bg = useAlpha('primary.600', 0.08);

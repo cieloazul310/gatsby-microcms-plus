@@ -6,11 +6,11 @@ import ArticleList from '../components/ArticleList';
 import Pagination from '../components/Pagination';
 import Navigation from '../components/Navigation';
 import parseYYMM from '../utils/parseYYMM';
-import type { MicroCMSBlogsList } from '../../types';
+import type { MicrocmsBlogsList } from '../../types';
 
 type MonthTemplateData = {
   allMicrocmsBlogs: {
-    nodes: MicroCMSBlogsList[];
+    nodes: MicrocmsBlogsList[];
   };
 };
 

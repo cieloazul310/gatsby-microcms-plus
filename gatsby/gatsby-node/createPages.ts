@@ -1,6 +1,6 @@
 import * as path from 'path';
 import type { CreatePagesArgs } from 'gatsby';
-import type { MicroCMSBlogs, MicroCMSCategories } from '../../types';
+import type { MicrocmsBlogs, MicrocmsCategories } from '../../types';
 
 function parseYYMM(yymm: string) {
   const [year, month] = yymm.split('/');
@@ -9,7 +9,7 @@ function parseYYMM(yymm: string) {
 
 type CreatePagesQueryData = {
   allMicrocmsBlogs: {
-    nodes: Pick<MicroCMSBlogs, 'slug'>[];
+    nodes: Pick<MicrocmsBlogs, 'slug'>[];
     categories: {
       fieldValue: string;
       totalCount: number;
@@ -20,7 +20,7 @@ type CreatePagesQueryData = {
     }[];
   };
   allMicrocmsCategories: {
-    nodes: Pick<MicroCMSCategories, 'name' | 'categoriesId'>[];
+    nodes: Pick<MicrocmsCategories, 'name' | 'categoriesId'>[];
   };
 };
 

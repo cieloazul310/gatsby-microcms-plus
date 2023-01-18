@@ -6,12 +6,12 @@ import Seo from '../components/Seo';
 import Paper from '../components/Paper';
 import ArticleList from '../components/ArticleList';
 import useSiteMetadata from '../utils/useSiteMetadata';
-import type { MicroCMSHello, MicroCMSBlogsList } from '../../types';
+import type { MicrocmsHello, MicrocmsBlogsList } from '../../types';
 
 type IndexPageData = {
-  microcmsHello: Pick<MicroCMSHello, 'text' | 'updatedAt'>;
+  microcmsHello: Pick<MicrocmsHello, 'text' | 'revisedAt'>;
   allMicrocmsBlogs: {
-    nodes: MicroCMSBlogsList[];
+    nodes: MicrocmsBlogsList[];
   };
 };
 
@@ -27,7 +27,7 @@ function IndexPage({ data }: PageProps<IndexPageData>) {
         </Heading>
         <Text>{microcmsHello.text}</Text>
         <Text as="footer">
-          <time>{microcmsHello.updatedAt}</time> 更新
+          <time>{microcmsHello.revisedAt}</time> 更新
         </Text>
       </Paper>
       <ArticleList title="最新記事" items={allMicrocmsBlogs.nodes} bottomButton={{ title: '記事の一覧へ', path: '/posts/' }} />
@@ -45,7 +45,7 @@ export const query = graphql`
   {
     microcmsHello {
       text
-      updatedAt(formatString: "YYYY年MM月DD日")
+      revisedAt(formatString: "YYYY年MM月DD日")
     }
     allMicrocmsBlogs(sort: { publishedAt: DESC }, limit: 8) {
       nodes {

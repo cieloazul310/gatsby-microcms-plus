@@ -5,13 +5,13 @@ import Seo from '../components/Seo';
 import Paper from '../components/Paper';
 import ArticleList from '../components/ArticleList';
 import Pagination from '../components/Pagination';
-import type { MicroCMSBlogsList, MicroCMSCategories } from '../../types';
+import type { MicrocmsBlogsList, MicrocmsCategories } from '../../types';
 
 type CategoriesTemplateData = {
   allMicrocmsBlogs: {
-    nodes: MicroCMSBlogsList[];
+    nodes: MicrocmsBlogsList[];
   };
-  microcmsCategories: Pick<MicroCMSCategories, 'name'>;
+  microcmsCategories: Pick<MicrocmsCategories, 'name'>;
 };
 
 type CategoriesTemplatePageContext = {

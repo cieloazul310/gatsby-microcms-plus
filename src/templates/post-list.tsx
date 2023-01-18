@@ -4,11 +4,11 @@ import BasicLayout from '../layout/Basic';
 import Seo from '../components/Seo';
 import ArticleList from '../components/ArticleList';
 import Pagination from '../components/Pagination';
-import type { MicroCMSBlogsList } from '../../types';
+import type { MicrocmsBlogsList } from '../../types';
 
 type PostListTemplateData = {
   allMicrocmsBlogs: {
-    nodes: MicroCMSBlogsList[];
+    nodes: MicrocmsBlogsList[];
   };
 };
 
