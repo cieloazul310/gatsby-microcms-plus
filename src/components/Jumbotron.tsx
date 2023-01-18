@@ -50,7 +50,6 @@ function Jumbotron({
 Jumbotron.defaultProps = {
   title: undefined,
   description: undefined,
-  // height: 480,
 };
 
 export default Jumbotron;
