@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { type PageProps } from 'gatsby';
 import {
+  Heading,
+  Text,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -20,8 +22,17 @@ import Paper from '../components/Paper';
 import useArticle from '../utils/useArticle';
 import type { MicroCMSBlogs } from '../../types';
 
+function dateToYYYYMMDD(dateString?: string | null) {
+  if (!dateString) return undefined;
+
+  const date = new Date(dateString);
+  const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
+
+  return `${year}年${(month + 1).toString().padStart(2, '0')}月${day.toString().padStart(2, '0')}日`;
+}
+
 type PreviewTemplateQueryData = {
-  microcmsBlogs: Pick<MicroCMSBlogs, 'slug' | 'title' | 'createdAt' | 'content' | 'featuredImg'>;
+  microcmsBlogs: Pick<MicroCMSBlogs, 'slug' | 'title' | 'createdAt' | 'publishedAt' | 'updatedAt' | 'content' | 'featuredImg'>;
 };
 
 function Preview({ location }: PageProps<PreviewTemplateQueryData>) {
@@ -54,16 +65,22 @@ function Preview({ location }: PageProps<PreviewTemplateQueryData>) {
     }
   };
   const title = data?.microcmsBlogs?.title ?? 'Preview';
-  const date = data?.microcmsBlogs?.createdAt ? new Date(data.microcmsBlogs.createdAt) : undefined;
-  const description = date
-    ? `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`
-    : undefined;
+  const publishedAt = dateToYYYYMMDD(data?.microcmsBlogs?.publishedAt ?? data?.microcmsBlogs?.createdAt);
+  const updatedAt = dateToYYYYMMDD(data?.microcmsBlogs?.updatedAt);
+  const description = publishedAt;
   const content = data?.microcmsBlogs?.content ?? '<p>プレビュー</p>';
   const body = useArticle(content);
 
   return (
     <BasicLayout title={title} description={description}>
       <Paper as="article">{body}</Paper>
+      <Paper as="footer">
+        <Heading as="h1" size="sm" mb={2}>
+          {title}
+        </Heading>
+        <Text>公開日: {publishedAt ?? 'YYYY年MM月DD日'}</Text>
+        <Text>更新日: {updatedAt ?? 'YYYY年MM月DD日'}</Text>
+      </Paper>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
