@@ -46,7 +46,7 @@ type NavigationProps = {
 
 function Navigation({ left, right }: NavigationProps) {
   return (
-    <Flex gap={2} flexDirection={['column', 'column', left ? 'row' : 'row-reverse']}>
+    <Flex as="nav" gap={2} flexDirection={['column', 'column', left ? 'row' : 'row-reverse']}>
       {left ? <NavigationButton href={left.slug} label={left.label} /> : null}
       {right ? <NavigationButton href={right.slug} label={right.label} right /> : null}
     </Flex>

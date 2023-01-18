@@ -9,8 +9,8 @@ const siteUrl = url.toString();
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `Gatsby microCMS Example`,
-    description: `Gatsby + microCMS`,
+    title: `Gatsby microCMS Plus`,
+    description: `Gatsby + microCMS + Chakra UI`,
     author: `cieloazul310`,
     siteUrl,
   },

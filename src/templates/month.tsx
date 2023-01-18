@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { graphql, type PageProps, type HeadProps } from 'gatsby';
-import { VStack } from '@chakra-ui/react';
 import BasicLayout from '../layout/Basic';
 import Seo from '../components/Seo';
-import ArticleItem from '../components/ArticleItem';
+import ArticleList from '../components/ArticleList';
 import Pagination from '../components/Pagination';
 import Navigation from '../components/Navigation';
 import parseYYMM from '../utils/parseYYMM';
@@ -37,11 +36,7 @@ function MonthTemplate({ data, pageContext }: PageProps<MonthTemplateData, Month
   const { year, month } = parseYYMM(fieldValue);
   return (
     <BasicLayout jumbotronHeight={240} title={`${year}年${month}月の記事`}>
-      <VStack spacing={2} align="stretch">
-        {allMicrocmsBlogs.nodes.map(({ slug, publishedAt, featuredImg, ...node }) => (
-          <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} featuredImg={featuredImg} />
-        ))}
-      </VStack>
+      <ArticleList items={allMicrocmsBlogs.nodes} />
       {numPages !== 1 ? <Pagination currentPage={currentPage} numPages={numPages} basePath={`/${fieldValue}/`} /> : null}
       <Navigation left={newer} right={older} />
     </BasicLayout>

@@ -1,17 +1,38 @@
+/* eslint react/jsx-props-no-spreading: warn */
 import * as React from 'react';
-import { Flex, Heading } from '@chakra-ui/react';
+import { Flex, Heading, type FlexProps } from '@chakra-ui/react';
 import useGradientBox from '../utils/useGradientBox';
 
-type JumbotronProps = React.PropsWithChildren<{
+type JumbotronProps = FlexProps & {
   title?: string;
   description?: string;
-  height?: number;
-}>;
+};
 
-function Jumbotron({ title, description, children, height = 480 }: JumbotronProps) {
+function Jumbotron({
+  title,
+  description,
+  children,
+  as = 'header',
+  flexDirection = 'column',
+  alignItems = 'center',
+  justifyContent = 'center',
+  height = ['calc(100vh - 56px)', 480],
+  px = 4,
+  ...props
+}: JumbotronProps) {
   const { color, bgGradient } = useGradientBox();
   return (
-    <Flex direction="column" alignItems="center" justifyContent="center" color={color} bgGradient={bgGradient} height={height} px={4}>
+    <Flex
+      as={as}
+      direction={flexDirection}
+      alignItems={alignItems}
+      justifyContent={justifyContent}
+      color={props.color ?? color}
+      bgGradient={props.bgGradient ?? bgGradient}
+      height={height}
+      px={px}
+      {...props}
+    >
       {children || (
         <>
           <Heading as="h1" size="2xl" mb={2}>
@@ -29,7 +50,7 @@ function Jumbotron({ title, description, children, height = 480 }: JumbotronProp
 Jumbotron.defaultProps = {
   title: undefined,
   description: undefined,
-  height: 480,
+  // height: 480,
 };
 
 export default Jumbotron;

@@ -1,20 +1,34 @@
 import * as React from 'react';
-import { Flex, VStack } from '@chakra-ui/react';
+import { Flex, VStack, IconButton, Drawer, DrawerOverlay, useDisclosure } from '@chakra-ui/react';
+import { HamburgerIcon } from '@chakra-ui/icons';
 import { useLocation } from '@reach/router';
 import Jumbotron from '../components/Jumbotron';
 import PaperButton from '../components/PaperButton';
 import Sidebar from './Sidebar';
+import DrawerContent from './DrawerContent';
 
 type BasicLayoutProps = React.PropsWithChildren<{
   title: string;
   description?: string;
   jumbotronHeight?: number;
   sidebarContents?: React.ReactNode;
+  drawerContents?: React.ReactNode;
   disableSidebar?: boolean;
 }>;
 
-function BasicLayout({ children, title, description, jumbotronHeight, sidebarContents, disableSidebar = false }: BasicLayoutProps) {
+function BasicLayout({
+  children,
+  title,
+  description,
+  jumbotronHeight,
+  sidebarContents,
+  drawerContents,
+  disableSidebar = false,
+}: BasicLayoutProps) {
   const { pathname } = useLocation();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef<null>(null);
+
   return (
     <>
       <Jumbotron title={title} description={description} height={jumbotronHeight} />
@@ -43,6 +57,22 @@ function BasicLayout({ children, title, description, jumbotronHeight, sidebarCon
           </VStack>
         ) : null}
       </Flex>
+      <IconButton
+        colorScheme="primary"
+        icon={<HamburgerIcon />}
+        size="lg"
+        aria-label="Menu"
+        display={['block', 'block', 'none']}
+        position="fixed"
+        bottom={4}
+        right={4}
+        zIndex="sticky"
+        onClick={onOpen}
+      />
+      <Drawer isOpen={isOpen} placement="bottom" onClose={onClose} finalFocusRef={btnRef}>
+        <DrawerOverlay />
+        <DrawerContent onClose={onClose} drawerContents={drawerContents} />
+      </Drawer>
     </>
   );
 }
@@ -51,6 +81,7 @@ BasicLayout.defaultProps = {
   description: undefined,
   jumbotronHeight: undefined,
   sidebarContents: undefined,
+  drawerContents: undefined,
   disableSidebar: false,
 };
 

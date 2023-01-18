@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { graphql, type PageProps, type HeadProps } from 'gatsby';
 import { getSrc } from 'gatsby-plugin-image';
+import { Heading, Text } from '@chakra-ui/react';
 import BasicLayout from '../layout/Basic';
 import Seo from '../components/Seo';
 import Paper from '../components/Paper';
@@ -27,6 +28,13 @@ function BlogsTemplate({ data }: PageProps<BlogPostTemplateQueryData, BlogPostTe
   return (
     <BasicLayout title={title} description={publishedAt}>
       <Paper as="article">{body}</Paper>
+      <Paper as="footer">
+        <Heading as="h1" size="sm" mb={2}>
+          {title}
+        </Heading>
+        <Text>公開日: {publishedAt}</Text>
+        <Text>更新日: {publishedAt}</Text>
+      </Paper>
       <Navigation
         left={newer ? { slug: newer.slug, label: newer.title } : null}
         right={older ? { slug: older.slug, label: older.title } : null}
