@@ -25,7 +25,7 @@ function DrawerContent({ drawerContents, onClose }: DrawerProps) {
   const { colorMode, toggleColorMode } = useColorMode();
   const { title } = useSiteMetadata();
   return (
-    <ChakraDrawerContent>
+    <ChakraDrawerContent maxHeight="75vh">
       <DrawerCloseButton />
       <DrawerHeader>{title}</DrawerHeader>
       <DrawerBody>

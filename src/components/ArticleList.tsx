@@ -25,7 +25,7 @@ function ArticleList({ items, bottomButton, ...props }: ArticleListProps) {
       {items.map((node) => (
         <ArticleItem key={node.slug} {...node} />
       ))}
-      {bottomButton ? <PaperButton to={bottomButton.path}>{bottomButton.title}</PaperButton> : null}
+      {bottomButton ? <PaperButton href={bottomButton.path}>{bottomButton.title}</PaperButton> : null}
     </VStack>
   );
 }

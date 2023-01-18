@@ -37,6 +37,7 @@ const chakraComponents = {
       <ChakraIframe {...props} />
     </AspectRatio>
   ),
+  code: (props: Record<string, any>) => <Code {...props} />,
   pre: CodeBlock,
 };
 

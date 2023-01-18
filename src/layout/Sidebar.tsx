@@ -10,7 +10,7 @@ function Sidebar() {
       {menu.map(({ name, items }) => (
         <VStack key={name} spacing={2} as="nav">
           {items.map(({ path, ...item }) => (
-            <PaperButton key={item.name} to={path} width="100%">
+            <PaperButton key={item.name} href={path} width="100%">
               {item.name}
             </PaperButton>
           ))}

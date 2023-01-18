@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Link as GatsbyLink, type GatsbyLinkProps } from 'gatsby';
 import { useColorMode, Link as ChakraLink, type LinkProps as ChakraLinkProps } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
+import useIsExternal from '../utils/useIsExternal';
 
 type LinkProps<TState = Record<string, unknown>> = Omit<GatsbyLinkProps<TState>, 'to'> &
   Omit<ChakraLinkProps, 'href'> &
@@ -12,10 +13,10 @@ type LinkProps<TState = Record<string, unknown>> = Omit<GatsbyLinkProps<TState>,
 
 function Link<TState = Record<string, unknown>>({ href, colorScheme = 'primary', children, ...props }: LinkProps) {
   const { colorMode } = useColorMode();
-  const internal = /^\/(?!\/)/.test(href);
+  const external = useIsExternal(href);
   const color = props.color ?? (colorMode === 'light' ? `${colorScheme}.700` : `${colorScheme}.200`);
 
-  if (internal) {
+  if (!external) {
     return (
       <ChakraLink as={GatsbyLink<TState>} color={color} {...props} to={href}>
         {children}
