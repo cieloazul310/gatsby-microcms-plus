@@ -1,28 +1,21 @@
 import * as React from 'react';
 import { VStack } from '@chakra-ui/react';
 import PaperButton from '../components/PaperButton';
-import useAllCategories from '../utils/useAllCategories';
-import useAllMonths from '../utils/useAllMonths';
+import useMenu from '../utils/useMenu';
 
 function Sidebar() {
-  const categories = useAllCategories();
-  const months = useAllMonths();
+  const menu = useMenu();
   return (
     <>
-      <VStack spacing={2} as="nav">
-        {categories.map(({ name, categoriesId }) => (
-          <PaperButton key={categoriesId} to={`/categories/${categoriesId}/`} width="100%">
-            {name}
-          </PaperButton>
-        ))}
-      </VStack>
-      <VStack spacing={2} as="nav">
-        {months.map(({ year, month, path }) => (
-          <PaperButton key={path} to={path} width="100%">
-            {year}年{month}月
-          </PaperButton>
-        ))}
-      </VStack>
+      {menu.map(({ name, items }) => (
+        <VStack key={name} spacing={2} as="nav">
+          {items.map(({ path, ...item }) => (
+            <PaperButton key={item.name} to={path} width="100%">
+              {item.name}
+            </PaperButton>
+          ))}
+        </VStack>
+      ))}
     </>
   );
 }

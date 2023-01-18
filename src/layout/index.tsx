@@ -8,10 +8,8 @@ function Layout({ children }: LayoutProps) {
   return (
     <>
       <Header />
-      <main>
-        {children}
-        <Footer />
-      </main>
+      <main>{children}</main>
+      <Footer />
     </>
   );
 }

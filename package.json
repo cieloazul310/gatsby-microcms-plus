@@ -26,12 +26,13 @@
     "gatsby-source-filesystem": "^5.4.0",
     "gatsby-source-microcms": "^3.0.0",
     "gatsby-transformer-sharp": "^5.4.0",
-    "html-dom-parser": "^3.1.2",
     "html-react-parser": "^3.0.7",
+    "html-to-text": "^9.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/html-to-text": "^9.0.0",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",

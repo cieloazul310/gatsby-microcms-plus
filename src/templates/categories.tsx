@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { graphql, type PageProps, type HeadProps } from 'gatsby';
-import { VStack } from '@chakra-ui/react';
 import BasicLayout from '../layout/Basic';
 import Seo from '../components/Seo';
 import Paper from '../components/Paper';
-import ArticleItem from '../components/ArticleItem';
+import ArticleList from '../components/ArticleList';
 import Pagination from '../components/Pagination';
 import type { MicroCMSBlogsList, MicroCMSCategories } from '../../types';
 
@@ -28,12 +27,11 @@ function CategoriesTemplate({ data, pageContext }: PageProps<CategoriesTemplateD
   const { numPages, currentPage, fieldValue } = pageContext;
   return (
     <BasicLayout jumbotronHeight={240} title={microcmsCategories.name}>
-      <VStack spacing={2} align="stretch">
-        {allMicrocmsBlogs.nodes.length === 0 ? <Paper>このカテゴリーは記事がありません。</Paper> : null}
-        {allMicrocmsBlogs.nodes.map(({ slug, publishedAt, featuredImg, ...node }) => (
-          <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} featuredImg={featuredImg} />
-        ))}
-      </VStack>
+      {allMicrocmsBlogs.nodes.length !== 0 ? (
+        <ArticleList items={allMicrocmsBlogs.nodes} />
+      ) : (
+        <Paper>このカテゴリーは記事がありません。</Paper>
+      )}
       {numPages !== 1 ? <Pagination currentPage={currentPage} numPages={numPages} basePath={`/categories/${fieldValue}/`} /> : null}
     </BasicLayout>
   );

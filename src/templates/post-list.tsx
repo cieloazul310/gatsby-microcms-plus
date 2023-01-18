@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { graphql, type PageProps, type HeadProps } from 'gatsby';
-import { VStack } from '@chakra-ui/react';
 import BasicLayout from '../layout/Basic';
 import Seo from '../components/Seo';
-import ArticleItem from '../components/ArticleItem';
+import ArticleList from '../components/ArticleList';
 import Pagination from '../components/Pagination';
 import type { MicroCMSBlogsList } from '../../types';
 
@@ -25,11 +24,7 @@ function PostListTemplate({ data, pageContext }: PageProps<PostListTemplateData,
   const { numPages, currentPage } = pageContext;
   return (
     <BasicLayout jumbotronHeight={240} title={`記事の一覧 (${currentPage}/${numPages})`}>
-      <VStack spacing={2} align="stretch">
-        {allMicrocmsBlogs.nodes.map(({ slug, publishedAt, featuredImg, ...node }) => (
-          <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} featuredImg={featuredImg} />
-        ))}
-      </VStack>
+      <ArticleList items={allMicrocmsBlogs.nodes} />
       {numPages !== 1 ? <Pagination currentPage={currentPage} numPages={numPages} basePath="/posts/" /> : null}
     </BasicLayout>
   );

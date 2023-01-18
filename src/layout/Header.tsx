@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Flex, Box, Spacer, Heading, ButtonGroup, Button, Hide, IconButton, useColorMode } from '@chakra-ui/react';
+import { Flex, Box, Spacer, Heading, ButtonGroup, Button, IconButton, useColorMode } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import Link from '../components/Link';
 import useGradientBox from '../utils/useGradientBox';
@@ -14,6 +14,7 @@ function Header() {
     <Flex
       as="header"
       alignItems="center"
+      justifyContent={['center', 'start']}
       gap={2}
       position="sticky"
       top={0}
@@ -25,6 +26,7 @@ function Header() {
       <Box px={4} py={2}>
         <Link
           href="/"
+          color="white"
           _hover={{
             color: 'primary.100',
             textDecoration: 'none',
@@ -35,13 +37,11 @@ function Header() {
           </Heading>
         </Link>
       </Box>
-      <Spacer />
-      <Hide below="sm">
-        <ButtonGroup gap="2" px={4} py={2} colorScheme="primary">
-          <Button>About</Button>
-          <IconButton onClick={toggleColorMode} icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />} aria-label="toggle color mode" />
-        </ButtonGroup>
-      </Hide>
+      <Spacer display={['none', 'inherit']} />
+      <ButtonGroup display={['none', 'inherit']} gap="2" px={4} py={2} colorScheme="primary">
+        <Button>About</Button>
+        <IconButton onClick={toggleColorMode} icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />} aria-label="toggle color mode" />
+      </ButtonGroup>
     </Flex>
   );
 }

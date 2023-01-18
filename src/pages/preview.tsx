@@ -54,7 +54,10 @@ function Preview({ location }: PageProps<PreviewTemplateQueryData>) {
     }
   };
   const title = data?.microcmsBlogs?.title ?? 'Preview';
-  const description = data?.microcmsBlogs?.createdAt ?? undefined;
+  const date = data?.microcmsBlogs?.createdAt ? new Date(data.microcmsBlogs.createdAt) : undefined;
+  const description = date
+    ? `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`
+    : undefined;
   const content = data?.microcmsBlogs?.content ?? '<p>プレビュー</p>';
   const body = useArticle(content);
 
