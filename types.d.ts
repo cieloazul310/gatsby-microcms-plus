@@ -42,6 +42,7 @@ export type MicroCMSBlogs = {
   revisedAt: string;
   title: string;
   content: string;
+  excerpt: string;
   eyecatch: MicroCMSBlogsEyecatch | null;
   category: Omit<MicroCMSBlogsCategory, ''> | null;
   sortIndex: number;
@@ -50,4 +51,4 @@ export type MicroCMSBlogs = {
   featuredImg: ImageDataLike | null;
 } & Node;
 
-export type MicroCMSBlogsList = Pick<MicroCMSBlogs, 'title' | 'slug' | 'featuredImg' | 'publishedAt'>;
+export type MicroCMSBlogsList = Pick<MicroCMSBlogs, 'title' | 'slug' | 'featuredImg' | 'publishedAt' | 'excerpt'>;

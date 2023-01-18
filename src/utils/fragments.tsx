@@ -5,6 +5,7 @@ export default function useFragments() {
     fragment MicrocmsBlogsList on MicrocmsBlogs {
       slug
       title
+      excerpt(length: 80)
       publishedAt(formatString: "YYYY年MM月DD日")
       featuredImg {
         childImageSharp {

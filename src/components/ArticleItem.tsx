@@ -3,13 +3,13 @@ import { Link as GatsbyLink } from 'gatsby';
 import { chakra, Box, AspectRatio, LinkBox, LinkOverlay, Text, Heading } from '@chakra-ui/react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import useAlpha from '../utils/useAlpha';
-import type { MicroCMSBlogs } from '../../types';
+import type { MicroCMSBlogsList } from '../../types';
 
 const Image = chakra('image');
 
-type ArticleItemProps = Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt' | 'featuredImg'>;
+type ArticleItemProps = MicroCMSBlogsList;
 
-function ArticleItem({ slug, title, publishedAt, featuredImg }: ArticleItemProps) {
+function ArticleItem({ slug, title, publishedAt, featuredImg, excerpt }: ArticleItemProps) {
   const bg = useAlpha('primary.600', 0.08);
   const image = getImage(featuredImg);
   return (
@@ -24,10 +24,13 @@ function ArticleItem({ slug, title, publishedAt, featuredImg }: ArticleItemProps
           {publishedAt}
         </Text>
         <LinkOverlay as={GatsbyLink} to={slug}>
-          <Heading as="h3" fontSize={['sm', 'md']} fontWeight={['normal', 'semibold', 'bold']}>
+          <Heading as="h3" fontSize={['sm', 'md']} fontWeight={['normal', 'semibold', 'bold']} mb={2}>
             {title}
           </Heading>
         </LinkOverlay>
+        <Text wordBreak="break-word" textOverflow="ellipsis" display={['none', 'none', 'block']}>
+          {excerpt}
+        </Text>
       </Box>
     </LinkBox>
   );

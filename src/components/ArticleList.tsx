@@ -1,11 +1,12 @@
+/* eslint react/jsx-props-no-spreading: warn */
 import * as React from 'react';
 import { VStack, Heading } from '@chakra-ui/react';
 import ArticleItem from './ArticleItem';
 import PaperButton from './PaperButton';
-import type { MicroCMSBlogs } from '../../types';
+import type { MicroCMSBlogsList } from '../../types';
 
 type ArticleListProps = {
-  items: Pick<MicroCMSBlogs, 'title' | 'slug' | 'publishedAt' | 'featuredImg'>[];
+  items: MicroCMSBlogsList[];
   title?: React.ReactNode;
   bottomButton?: {
     title: string;
@@ -21,8 +22,8 @@ function ArticleList({ items, bottomButton, ...props }: ArticleListProps) {
           {props.title}
         </Heading>
       ) : null}
-      {items.map(({ slug, publishedAt, featuredImg, ...node }) => (
-        <ArticleItem key={slug} title={node.title} slug={slug} publishedAt={publishedAt} featuredImg={featuredImg} />
+      {items.map((node) => (
+        <ArticleItem key={node.slug} {...node} />
       ))}
       {bottomButton ? <PaperButton to={bottomButton.path}>{bottomButton.title}</PaperButton> : null}
     </VStack>

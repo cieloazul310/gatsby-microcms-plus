@@ -10,7 +10,7 @@ import useArticle from '../utils/useArticle';
 import type { MicroCMSBlogs } from '../../types';
 
 type BlogPostTemplateQueryData = {
-  microcmsBlogs: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt' | 'content' | 'featuredImg'>;
+  microcmsBlogs: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt' | 'revisedAt' | 'content' | 'featuredImg' | 'excerpt'>;
   newer: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt'> | null;
   older: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt'> | null;
 };
@@ -23,7 +23,7 @@ type BlogPostTemplatePageContext = {
 
 function BlogsTemplate({ data }: PageProps<BlogPostTemplateQueryData, BlogPostTemplatePageContext>) {
   const { microcmsBlogs, newer, older } = data;
-  const { title, publishedAt, content } = microcmsBlogs;
+  const { title, publishedAt, revisedAt, content } = microcmsBlogs;
   const body = useArticle(content);
   return (
     <BasicLayout title={title} description={publishedAt}>
@@ -33,7 +33,7 @@ function BlogsTemplate({ data }: PageProps<BlogPostTemplateQueryData, BlogPostTe
           {title}
         </Heading>
         <Text>公開日: {publishedAt}</Text>
-        <Text>更新日: {publishedAt}</Text>
+        <Text>最終更新日: {revisedAt}</Text>
       </Paper>
       <Navigation
         left={newer ? { slug: newer.slug, label: newer.title } : null}
@@ -47,8 +47,9 @@ export default BlogsTemplate;
 
 export function Head({ data }: HeadProps<BlogPostTemplateQueryData, BlogPostTemplatePageContext>) {
   const { microcmsBlogs } = data;
+  const description = microcmsBlogs.excerpt;
   const imageUrl = microcmsBlogs.featuredImg ? getSrc(microcmsBlogs.featuredImg) : undefined;
-  return <Seo title={microcmsBlogs.title} image={imageUrl} />;
+  return <Seo title={microcmsBlogs.title} description={description} image={imageUrl} />;
 }
 
 export const query = graphql`
@@ -57,7 +58,9 @@ export const query = graphql`
       slug
       title
       publishedAt(formatString: "YYYY年MM月DD日")
+      revisedAt(formatString: "YYYY年MM月DD日")
       content
+      excerpt
       featuredImg {
         childImageSharp {
           gatsbyImageData

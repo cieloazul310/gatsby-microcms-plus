@@ -6,11 +6,11 @@ import ArticleList from '../components/ArticleList';
 import Pagination from '../components/Pagination';
 import Navigation from '../components/Navigation';
 import parseYYMM from '../utils/parseYYMM';
-import type { MicroCMSBlogs } from '../../types';
+import type { MicroCMSBlogsList } from '../../types';
 
 type MonthTemplateData = {
   allMicrocmsBlogs: {
-    nodes: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt' | 'featuredImg'>[];
+    nodes: MicroCMSBlogsList[];
   };
 };
 
@@ -56,14 +56,7 @@ export const query = graphql`
   query MonthPostList($skip: Int!, $limit: Int!, $fieldValue: String!) {
     allMicrocmsBlogs(filter: { yymm: { eq: $fieldValue } }, sort: { publishedAt: DESC }, limit: $limit, skip: $skip) {
       nodes {
-        slug
-        title
-        publishedAt(formatString: "YYYY年MM月DD日")
-        featuredImg {
-          childImageSharp {
-            gatsbyImageData(width: 320)
-          }
-        }
+        ...MicrocmsBlogsList
       }
     }
   }

@@ -1,5 +1,5 @@
 import type { CreateSchemaCustomizationArgs } from 'gatsby';
-// import parse from 'html-dom-parser';
+import { convert } from 'html-to-text';
 import type { MicroCMSBlogs } from '../../types';
 
 export default async function createSchemaCustomization({ actions, schema }: CreateSchemaCustomizationArgs) {
@@ -10,7 +10,7 @@ export default async function createSchemaCustomization({ actions, schema }: Cre
       yymm: String!
       slug: String!
       featuredImg: File @link(from: "fields.localFile")
-      excerpt: String
+      excerpt: String!
     }
   `);
   createTypes(
@@ -44,11 +44,21 @@ export default async function createSchemaCustomization({ actions, schema }: Cre
         },
         excerpt: {
           type: `String!`,
-          /*
-          resolve: ({ content }: Pick<MicroCMSBlogs, 'content'>) => {
-            const item = parse(content);
+          args: {
+            length: 'Int',
           },
-          */
+          resolve: ({ content }: Pick<MicroCMSBlogs, 'content'>, { length }: { length: number | undefined }) => {
+            const text = convert(content, {
+              baseElements: { selectors: ['p'] },
+              selectors: [
+                { selector: 'img', format: 'skip' },
+                { selector: 'a', options: { ignoreHref: true } },
+                { selector: 'br', format: 'skip' },
+              ],
+              wordwrap: false,
+            });
+            return text.replace(/\n/g, '').slice(0, length ?? 140);
+          },
         },
       },
     })
