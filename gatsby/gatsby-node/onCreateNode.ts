@@ -1,8 +1,8 @@
 import type { CreateNodeArgs, Node } from 'gatsby';
 import { createRemoteFileNode } from 'gatsby-source-filesystem';
-import type { MicroCMSBlogs } from '../../types';
+import type { MicrocmsBlogs } from '../../types';
 
-function isMicorcmBlogs(node: Node): node is MicroCMSBlogs {
+function isMicorcmBlogs(node: Node): node is MicrocmsBlogs {
   return node.internal.type === 'MicrocmsBlogs';
 }
 

@@ -1,9 +1,9 @@
 import { graphql, useStaticQuery } from 'gatsby';
-import type { MicroCMSCategories } from '../../types';
+import type { MicrocmsCategories } from '../../types';
 
 type UseAllCatgoriesQueryData = {
   allMicrocmsCategories: {
-    nodes: Pick<MicroCMSCategories, 'name' | 'categoriesId'>[];
+    nodes: Pick<MicrocmsCategories, 'name' | 'categoriesId'>[];
   };
 };
 

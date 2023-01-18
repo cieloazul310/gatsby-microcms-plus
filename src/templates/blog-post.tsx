@@ -7,12 +7,12 @@ import Seo from '../components/Seo';
 import Paper from '../components/Paper';
 import Navigation from '../components/Navigation';
 import useArticle from '../utils/useArticle';
-import type { MicroCMSBlogs } from '../../types';
+import type { MicrocmsBlogs } from '../../types';
 
 type BlogPostTemplateQueryData = {
-  microcmsBlogs: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt' | 'revisedAt' | 'content' | 'featuredImg' | 'excerpt'>;
-  newer: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt'> | null;
-  older: Pick<MicroCMSBlogs, 'slug' | 'title' | 'publishedAt'> | null;
+  microcmsBlogs: Pick<MicrocmsBlogs, 'slug' | 'title' | 'publishedAt' | 'revisedAt' | 'content' | 'featuredImg' | 'excerpt'>;
+  newer: Pick<MicrocmsBlogs, 'slug' | 'title' | 'publishedAt'> | null;
+  older: Pick<MicrocmsBlogs, 'slug' | 'title' | 'publishedAt'> | null;
 };
 
 type BlogPostTemplatePageContext = {

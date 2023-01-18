@@ -6,12 +6,12 @@ import Seo from '../components/Seo';
 import Paper from '../components/Paper';
 import ArticleList from '../components/ArticleList';
 import useSiteMetadata from '../utils/useSiteMetadata';
-import type { MicroCMSHello, MicroCMSBlogsList } from '../../types';
+import type { MicrocmsHello, MicrocmsBlogsList } from '../../types';
 
 type IndexPageData = {
-  microcmsHello: Pick<MicroCMSHello, 'text' | 'revisedAt'>;
+  microcmsHello: Pick<MicrocmsHello, 'text' | 'revisedAt'>;
   allMicrocmsBlogs: {
-    nodes: MicroCMSBlogsList[];
+    nodes: MicrocmsBlogsList[];
   };
 };
 

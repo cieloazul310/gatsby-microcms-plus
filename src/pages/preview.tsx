@@ -20,7 +20,7 @@ import BasicLayout from '../layout/Basic';
 import Seo from '../components/Seo';
 import Paper from '../components/Paper';
 import useArticle from '../utils/useArticle';
-import type { MicroCMSBlogs } from '../../types';
+import type { MicrocmsBlogs } from '../../types';
 
 function dateToYYYYMMDD(dateString?: string | null) {
   if (!dateString) return undefined;
@@ -32,7 +32,7 @@ function dateToYYYYMMDD(dateString?: string | null) {
 }
 
 type PreviewTemplateQueryData = {
-  microcmsBlogs: Pick<MicroCMSBlogs, 'slug' | 'title' | 'createdAt' | 'publishedAt' | 'updatedAt' | 'content' | 'featuredImg'>;
+  microcmsBlogs: Pick<MicrocmsBlogs, 'slug' | 'title' | 'createdAt' | 'publishedAt' | 'updatedAt' | 'content' | 'featuredImg'>;
 };
 
 function Preview({ location }: PageProps<PreviewTemplateQueryData>) {

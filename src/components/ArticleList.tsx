@@ -3,10 +3,10 @@ import * as React from 'react';
 import { VStack, Heading } from '@chakra-ui/react';
 import ArticleItem from './ArticleItem';
 import PaperButton from './PaperButton';
-import type { MicroCMSBlogsList } from '../../types';
+import type { MicrocmsBlogsList } from '../../types';
 
 type ArticleListProps = {
-  items: MicroCMSBlogsList[];
+  items: MicrocmsBlogsList[];
   title?: React.ReactNode;
   bottomButton?: {
     title: string;
