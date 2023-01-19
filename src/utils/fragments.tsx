@@ -7,10 +7,10 @@ export default function useFragments() {
       title
       excerpt(length: 180)
       publishedAt(formatString: "YYYY年MM月DD日")
+      publishDate: publishedAt(formatString: "YYYY-MM-DD")
       category {
         name
       }
-      difference: publishedAt(difference: "days")
       featuredImg {
         childImageSharp {
           gatsbyImageData(width: 320)
