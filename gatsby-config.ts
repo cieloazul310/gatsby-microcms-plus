@@ -15,6 +15,7 @@ const config: GatsbyConfig = {
     siteUrl,
   },
   pathPrefix,
+  graphqlTypegen: false,
   plugins: [
     {
       resolve: '@chakra-ui/gatsby-plugin',

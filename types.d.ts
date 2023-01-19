@@ -27,6 +27,18 @@ export type MicrocmsDefaultFields = {
 
 export type MicrocmsHello = {
   text: string;
+  textarea: string;
+  image: {
+    url: string;
+    width: number;
+    height: number;
+  } | null;
+  date: string;
+  socials: {
+    fieldId: string;
+    name: string;
+    url: string;
+  }[];
 } & Omit<MicrocmsDefaultFields, 'sortIndex'> &
   Node;
 
@@ -52,9 +64,14 @@ export type MicrocmsBlogs = {
   category: MicrocmsBlogsCategory | null;
 } & MicrocmsDefaultFields &
   Node & {
+    year: number;
+    yymm: string;
     slug: string;
     excerpt: string;
     featuredImg: ImageDataLike | null;
   };
 
-export type MicrocmsBlogsList = Pick<MicrocmsBlogs, 'title' | 'slug' | 'featuredImg' | 'publishedAt' | 'excerpt'>;
+export type MicrocmsBlogsList = Pick<MicrocmsBlogs, 'title' | 'slug' | 'featuredImg' | 'publishedAt' | 'excerpt'> & {
+  category: Pick<MicrocmsBlogsCategory, 'name'> | null;
+  difference: string;
+};
