@@ -73,5 +73,5 @@ export type MicrocmsBlogs = {
 
 export type MicrocmsBlogsList = Pick<MicrocmsBlogs, 'title' | 'slug' | 'featuredImg' | 'publishedAt' | 'excerpt'> & {
   category: Pick<MicrocmsBlogsCategory, 'name'> | null;
-  difference: string;
+  publishDate: string;
 };

@@ -9,8 +9,11 @@ const Image = chakra('image');
 
 type ArticleItemProps = MicrocmsBlogsList;
 
-function ArticleItem({ slug, title, publishedAt, category, difference, featuredImg, excerpt }: ArticleItemProps) {
-  const daysBefore = parseInt(difference, 10);
+function ArticleItem({ slug, title, publishedAt, publishDate, category, featuredImg, excerpt }: ArticleItemProps) {
+  const daysBefore = React.useMemo(() => {
+    const diff = Date.now() - new Date(publishDate).valueOf();
+    return Math.ceil(diff / 1000 / 60 / 60 / 24);
+  }, [publishDate]);
   const bg = useAlpha('primary.600', 0.08);
   const image = getImage(featuredImg);
   const { colorMode } = useColorMode();
@@ -28,15 +31,17 @@ function ArticleItem({ slug, title, publishedAt, category, difference, featuredI
             <Image as={GatsbyImage} image={image} alt={title} objectFit="fill" rounded="xl" zIndex="docked" />
           ) : (
             <Text color={colorMode === 'light' ? 'blackAlpha.500' : 'whiteAlpha.500'} fontSize={['md', 'md', 'lg']} fontWeight="extrabold">
-              {category?.name}
+              {category?.name ?? '記事'}
             </Text>
           )}
         </AspectRatio>
       </Box>
       <Box p={[2, 4]}>
         <Text fontSize="sm" mb={2} display="flex" alignItems="center" gap={1}>
-          <Text as="time">{publishedAt}</Text>
-          {daysBefore < 8 ? <Badge colorScheme="secondary">New</Badge> : null}
+          <Text as="time" dateTime={publishDate}>
+            {publishedAt}
+          </Text>
+          {daysBefore >= 0 && daysBefore < 8 ? <Badge colorScheme="secondary">New</Badge> : null}
         </Text>
         <LinkOverlay as={GatsbyLink} to={slug}>
           <Heading as="h3" fontSize={['sm', 'md']} fontWeight={['normal', 'semibold', 'bold']} mb={2}>
