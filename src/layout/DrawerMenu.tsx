@@ -8,9 +8,12 @@ function DrawerMenu() {
   return (
     <>
       {menu.map(({ name, items }) => (
-        <VStack key={name} spacing={1}>
+        <VStack key={name} spacing={1} align="stretch">
+          <PaperButton href="/about/" size="sm">
+            About
+          </PaperButton>
           {items.map(({ path, ...item }) => (
-            <PaperButton key={item.name} href={path} width="100%" size="sm">
+            <PaperButton key={item.name} href={path} size="sm">
               {item.name}
             </PaperButton>
           ))}

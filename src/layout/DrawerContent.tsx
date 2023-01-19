@@ -29,7 +29,7 @@ function DrawerContent({ drawerContents, onClose }: DrawerProps) {
       <DrawerCloseButton />
       <DrawerHeader>{title}</DrawerHeader>
       <DrawerBody>
-        <VStack spacing={2} align="stretch">
+        <VStack spacing={2} align="stretch" as="nav">
           {drawerContents}
           <DrawerMenu />
         </VStack>

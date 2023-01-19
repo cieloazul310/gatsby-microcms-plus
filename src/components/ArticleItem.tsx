@@ -43,9 +43,9 @@ function ArticleItem({ slug, title, publishedAt, category, difference, featuredI
             {title}
           </Heading>
         </LinkOverlay>
-        <Text wordBreak="break-word" textOverflow="ellipsis" display={['none', 'none', 'block']}>
-          {excerpt}
-        </Text>
+        <Box display={['none', 'none', 'block']}>
+          <Text noOfLines={[0, 0, 2]}>{excerpt}</Text>
+        </Box>
       </Box>
     </LinkBox>
   );

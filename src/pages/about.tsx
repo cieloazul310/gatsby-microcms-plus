@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { graphql, type PageProps } from 'gatsby';
-import { Flex, Button } from '@chakra-ui/react';
+import { Flex, Button, Link as ChakraLink } from '@chakra-ui/react';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
 import BasicLayout from '../layout/Basic';
 import Seo from '../components/Seo';
 import Paper from '../components/Paper';
@@ -38,8 +39,9 @@ function About({ data }: PageProps<AboutPageQueryData>) {
             <chakraComponents.h3>ソーシャル(カスタムフィールド)</chakraComponents.h3>
             <Flex direction={['column', 'row']} gap={2}>
               {socials.map(({ name, url }) => (
-                <Button key={url} as={chakraComponents.a} href={url} colorScheme="primary">
+                <Button key={url} as={ChakraLink} href={url} colorScheme="primary" isExternal>
                   {name}
+                  <ExternalLinkIcon mx="2px" />
                 </Button>
               ))}
             </Flex>
