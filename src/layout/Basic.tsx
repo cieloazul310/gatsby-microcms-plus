@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { withPrefix } from 'gatsby';
 import { Flex, VStack, IconButton, Drawer, DrawerOverlay, useDisclosure } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { useLocation } from '@reach/router';
@@ -35,7 +36,7 @@ function BasicLayout({
       <Flex py={4} px={2}>
         <VStack flexGrow={1} spacing={4} align="stretch" px={[0, 2]} maxWidth="100%">
           {children}
-          {pathname !== '/' ? <PaperButton href="/">トップページへ</PaperButton> : null}
+          {pathname !== withPrefix('/') ? <PaperButton href="/">トップページへ</PaperButton> : null}
         </VStack>
         {!disableSidebar ? (
           <VStack
