@@ -54,6 +54,8 @@ export default async function createPages({ graphql, actions, reporter }: Create
   if (!result.data) throw new Error('There are no posts');
 
   const { allMicrocmsBlogs, allMicrocmsCategories } = result.data;
+  // create pages for postlist page
+  const postsPerPage = 20;
 
   // create pages for each post
   allMicrocmsBlogs.nodes.forEach(({ slug }, index) => {
@@ -71,12 +73,10 @@ export default async function createPages({ graphql, actions, reporter }: Create
     });
   });
 
-  // create pages for postlist page
-  const postsPerPage = 20;
   const numPages = Math.ceil(allMicrocmsBlogs.nodes.length / postsPerPage);
   Array.from({ length: numPages }).forEach((_, index) => {
     createPage({
-      path: index === 0 ? '/posts/' : `/posts/${index + 1}/`,
+      path: index === 0 ? '/posts/' : `/posts/${encodeURIComponent(index + 1)}/`,
       component: path.resolve('./src/templates/post-list.tsx'),
       context: {
         limit: postsPerPage,
@@ -93,9 +93,9 @@ export default async function createPages({ graphql, actions, reporter }: Create
     const totalCount = group?.totalCount ?? 0;
     const numPagesForEachCategory = Math.ceil(totalCount / postsPerPage) || 1;
     Array.from({ length: numPagesForEachCategory }).forEach((_, index) => {
-      const basePath = `/categories/${categoriesId}/`;
+      const basePath = `/categories/${encodeURIComponent(categoriesId)}/`;
       createPage({
-        path: index === 0 ? basePath : `${basePath}${index + 1}`,
+        path: index === 0 ? basePath : `${basePath}${encodeURIComponent(index + 1)}`,
         component: path.resolve('./src/templates/categories.tsx'),
         context: {
           limit: postsPerPage,
@@ -120,7 +120,7 @@ export default async function createPages({ graphql, actions, reporter }: Create
 
       Array.from({ length: numPagesForEachMonth }).forEach((_, index) => {
         createPage({
-          path: index === 0 ? `/${fieldValue}/` : `/${fieldValue}/${index + 1}`,
+          path: index === 0 ? `/${fieldValue}/` : `/${fieldValue}/${encodeURIComponent(index + 1)}`,
           component: path.resolve('./src/templates/month.tsx'),
           context: {
             limit: postsPerPage,

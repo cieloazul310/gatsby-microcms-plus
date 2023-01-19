@@ -10,17 +10,19 @@ function useMenu() {
     () => [
       {
         name: 'Categories',
-        items: categories.map(({ name, categoriesId }) => ({ name, path: `/categories/${categoriesId}/` })),
+        items: categories.map(({ name, categoriesId }) => ({ name, path: `/categories/${encodeURIComponent(categoriesId)}/` })),
       },
       {
         name: 'Archive',
         items: months.map(({ year, month, path }) => ({ name: `${year}年${month}月`, path })),
       },
       {
-        name: 'SNS',
+        name: 'Link',
         items: [
-          { name: 'Twitter', path: 'https://twitter.com/cieloazul310' },
-          { name: 'GitHub', path: 'https://github.com/cieloazul310' },
+          { name: 'Gatsby', path: 'https://www.gatsbyjs.com/' },
+          { name: 'microCMS', path: 'https://microcms.io/' },
+          { name: 'Chakra UI', path: 'https://chakra-ui.com/' },
+          { name: 'GitHub', path: 'https://github.com/cieloazul310/gatsby-microcms-plus' },
         ],
       },
     ],

@@ -39,7 +39,9 @@ function Header() {
       </Box>
       <Spacer display={['none', 'inherit']} />
       <ButtonGroup display={['none', 'inherit']} gap="2" px={4} py={2} colorScheme="primary">
-        <Button>About</Button>
+        <Button as={Link} href="/about/">
+          About
+        </Button>
         <IconButton onClick={toggleColorMode} icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />} aria-label="toggle color mode" />
       </ButtonGroup>
     </Flex>
