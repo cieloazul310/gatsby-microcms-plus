@@ -7,11 +7,11 @@ function DrawerMenu() {
   const menu = useMenu();
   return (
     <>
+      <PaperButton href="/about/" size="sm">
+        About
+      </PaperButton>
       {menu.map(({ name, items }) => (
         <VStack key={name} spacing={1} align="stretch">
-          <PaperButton href="/about/" size="sm">
-            About
-          </PaperButton>
           {items.map(({ path, ...item }) => (
             <PaperButton key={item.name} href={path} size="sm">
               {item.name}
