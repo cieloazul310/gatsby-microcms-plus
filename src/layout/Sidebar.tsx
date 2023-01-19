@@ -8,9 +8,9 @@ function Sidebar() {
   return (
     <>
       {menu.map(({ name, items }) => (
-        <VStack key={name} spacing={2} as="nav">
+        <VStack key={name} spacing={2} as="nav" align="stretch">
           {items.map(({ path, ...item }) => (
-            <PaperButton key={item.name} href={path} width="100%">
+            <PaperButton key={item.name} href={path}>
               {item.name}
             </PaperButton>
           ))}

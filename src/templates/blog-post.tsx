@@ -8,6 +8,7 @@ import Paper from '../components/Paper';
 import Link from '../components/Link';
 import Navigation from '../components/Navigation';
 import useArticle from '../utils/useArticle';
+import useAssetUrl from '../utils/useAssetUrl';
 import type { MicrocmsBlogs, MicrocmsBlogsCategory } from '../../types';
 
 type BlogPostTemplateQueryData = {
@@ -58,8 +59,16 @@ export default BlogsTemplate;
 export function Head({ data }: HeadProps<BlogPostTemplateQueryData, BlogPostTemplatePageContext>) {
   const { microcmsBlogs } = data;
   const description = microcmsBlogs.excerpt;
-  const imagePath = microcmsBlogs.featuredImg ? getSrc(microcmsBlogs.featuredImg) : undefined;
-  return <Seo title={microcmsBlogs.title} description={description} image={imagePath} />;
+  const imagePath = useAssetUrl(microcmsBlogs.featuredImg ? getSrc(microcmsBlogs.featuredImg) : undefined);
+  return (
+    <Seo
+      title={microcmsBlogs.title}
+      description={description}
+      image={imagePath}
+      type="article"
+      twitterCard={imagePath ? 'summary_large_image' : 'summary'}
+    />
+  );
 }
 
 export const query = graphql`

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link as GatsbyLink } from 'gatsby';
 import { Flex, Box, Spacer, Heading, ButtonGroup, Button, IconButton, useColorMode } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import Link from '../components/Link';
@@ -39,7 +40,7 @@ function Header() {
       </Box>
       <Spacer display={['none', 'inherit']} />
       <ButtonGroup display={['none', 'inherit']} gap="2" px={4} py={2} colorScheme="primary">
-        <Button as={Link} href="/about/">
+        <Button as={GatsbyLink} to="/about/">
           About
         </Button>
         <IconButton onClick={toggleColorMode} icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />} aria-label="toggle color mode" />
