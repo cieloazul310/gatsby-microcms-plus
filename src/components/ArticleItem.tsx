@@ -22,7 +22,7 @@ function ArticleItem({ slug, title, publishedAt, publishDate, category, featured
     <LinkBox as="article" rounded="xl" borderWidth="1px" transition="background .25s" _hover={{ bg }} display="flex">
       <Box flexShrink="0" display="flex">
         {category ? (
-          <Badge variant="solid" position="absolute" zIndex={11} top={1} left={1}>
+          <Badge variant="solid" position="absolute" zIndex="calc(var(--chakra-zIndices-docked) + 1)" top={1} left={1}>
             {category.name}
           </Badge>
         ) : null}
@@ -36,14 +36,14 @@ function ArticleItem({ slug, title, publishedAt, publishDate, category, featured
           )}
         </AspectRatio>
       </Box>
-      <Box p={[2, 4]}>
+      <Box p={[2, 4]} flexGrow={1} display="flex" flexDirection="column" justifyContent="flex-start">
         <Text fontSize="sm" mb={2} display="flex" alignItems="center" gap={1}>
           <Text as="time" dateTime={publishDate}>
             {publishedAt}
           </Text>
           {daysBefore >= 0 && daysBefore < 8 ? <Badge colorScheme="secondary">New</Badge> : null}
         </Text>
-        <LinkOverlay as={GatsbyLink} to={slug}>
+        <LinkOverlay as={GatsbyLink} to={slug} zIndex="calc(var(--chakra-zIndices-docked) + 2)">
           <Heading as="h3" fontSize={['sm', 'md']} fontWeight={['normal', 'semibold', 'bold']} mb={2}>
             {title}
           </Heading>
