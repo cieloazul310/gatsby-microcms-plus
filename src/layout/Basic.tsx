@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { withPrefix } from 'gatsby';
-import { Flex, VStack, IconButton, Drawer, DrawerOverlay, useDisclosure } from '@chakra-ui/react';
+import { Container, VStack, IconButton, Drawer, DrawerOverlay, useDisclosure } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { useLocation } from '@reach/router';
 import Jumbotron from '../components/Jumbotron';
@@ -28,12 +28,12 @@ function BasicLayout({
 }: BasicLayoutProps) {
   const { pathname } = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef<null>(null);
+  const btnRef = React.useRef<HTMLButtonElement | null>(null);
 
   return (
     <>
       <Jumbotron title={title} description={description} height={jumbotronHeight} />
-      <Flex py={4} px={2}>
+      <Container display="flex" py={4} px={2} maxWidth="container.xl">
         <VStack flexGrow={1} spacing={4} align="stretch" px={[0, 2]} maxWidth="100%">
           {children}
           {pathname !== withPrefix('/') ? <PaperButton href="/">トップページへ</PaperButton> : null}
@@ -48,16 +48,16 @@ function BasicLayout({
             pb={8}
             flexShrink={0}
             position="sticky"
-            // maxHeight="calc(100vh - 56px)"
+            // maxHeight="calc(100vh - var(--chakra-sizes-header))"
             overflowY="auto"
-            top="calc(56px + 1rem)"
+            top="calc(var(--chakra-sizes-header) + 1rem)"
             right={0}
           >
             {sidebarContents}
             <Sidebar />
           </VStack>
         ) : null}
-      </Flex>
+      </Container>
       <IconButton
         colorScheme="primary"
         icon={<HamburgerIcon />}
@@ -69,6 +69,7 @@ function BasicLayout({
         right={4}
         zIndex="sticky"
         onClick={onOpen}
+        ref={btnRef}
       />
       <Drawer isOpen={isOpen} placement="bottom" onClose={onClose} finalFocusRef={btnRef}>
         <DrawerOverlay />

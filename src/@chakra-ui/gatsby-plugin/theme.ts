@@ -5,6 +5,9 @@ const theme = {
     primary: baseTheme.colors.blue,
     secondary: baseTheme.colors.orange,
   },
+  sizes: {
+    header: '56px',
+  },
 };
 
 export default extendTheme(theme);

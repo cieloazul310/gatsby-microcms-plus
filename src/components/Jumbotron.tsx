@@ -1,9 +1,9 @@
 /* eslint react/jsx-props-no-spreading: warn */
 import * as React from 'react';
-import { Flex, Heading, type FlexProps } from '@chakra-ui/react';
+import { Box, Container, Heading, type BoxProps } from '@chakra-ui/react';
 import useGradientBox from '../utils/useGradientBox';
 
-type JumbotronProps = FlexProps & {
+type JumbotronProps = BoxProps & {
   title?: string;
   description?: string;
 };
@@ -16,34 +16,36 @@ function Jumbotron({
   flexDirection = 'column',
   alignItems = 'center',
   justifyContent = 'center',
-  height = ['calc(100vh - 56px)', 480],
+  height = ['calc(100vh - var(--chakra-sizes-header))', 480],
   px = 4,
+  pb = ['var(--chakra-sizes-header)', 0],
   ...props
 }: JumbotronProps) {
   const { color, bgGradient } = useGradientBox();
   return (
-    <Flex
-      as={as}
-      direction={flexDirection}
-      alignItems={alignItems}
-      justifyContent={justifyContent}
-      color={props.color ?? color}
-      bgGradient={props.bgGradient ?? bgGradient}
-      height={height}
-      px={px}
-      {...props}
-    >
-      {children || (
-        <>
-          <Heading as="h1" size="2xl" mb={2}>
-            {title}
-          </Heading>
-          <Heading as="p" size="md" color="whiteAlpha.900">
-            {description}
-          </Heading>
-        </>
-      )}
-    </Flex>
+    <Box as={as} bgGradient={props.bgGradient ?? bgGradient} height={height} px={px} {...props}>
+      <Container
+        display="flex"
+        flexDirection={flexDirection}
+        alignItems={alignItems}
+        justifyContent={justifyContent}
+        color={props.color ?? color}
+        height={height}
+        maxWidth="container.xl"
+        pb={pb}
+      >
+        {children || (
+          <>
+            <Heading as="h1" size="2xl" mb={2}>
+              {title}
+            </Heading>
+            <Heading as="p" size="md" color="whiteAlpha.900">
+              {description}
+            </Heading>
+          </>
+        )}
+      </Container>
+    </Box>
   );
 }
 
