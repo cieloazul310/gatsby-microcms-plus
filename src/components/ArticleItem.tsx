@@ -41,7 +41,7 @@ function ArticleItem({ slug, title, publishedAt, publishDate, category, featured
           <Text as="time" dateTime={publishDate}>
             {publishedAt}
           </Text>
-          {daysBefore >= 0 && daysBefore < 8 ? <Badge colorScheme="secondary">New</Badge> : null}
+          {typeof window === 'object' && daysBefore >= 0 && daysBefore < 8 ? <Badge colorScheme="secondary">New</Badge> : null}
         </Text>
         <LinkOverlay as={GatsbyLink} to={slug} zIndex="calc(var(--chakra-zIndices-docked) + 2)">
           <Heading as="h3" fontSize={['sm', 'md']} fontWeight={['normal', 'semibold', 'bold']} mb={2}>
